@@ -1,0 +1,7 @@
+==== Sat 08/02/2025 15:51:34.78 - Open from configs\study.txt ==== 
+[Default ] Github Code Repo - https://github.com  
+[Default ] ChatGPT Assistant - https://chatgpt.com  
+[Default ]  - https://pomofocus.io 
+[Profile 1 ] Notion arm-cortex-m3m4 Notes - https://www.notion.so/huyphann155/arm-cortex-m3m4-238f5b92155e8066a1ddd112e84b9f9f  
+[Profile 1 ] Udemy arm-cortex Course - https://www.udemy.com/course/embedded-system-programming-on-arm-cortex-m3m4/learn/lecture/9079534#overview  
+ 
