@@ -12,13 +12,15 @@ It also keeps a history log of what you opened and when.
 ```
 LinkUp\
 │
-├── LinkUp.bat           # Main batch script
-├── README.md            # Read me
-└── configs\
-    ├── study.txt        # Config for study-related links
-    ├── work.txt         # Config for work-related links
-└── history\
-    ├── history.txt      # Session history log
+├── LinkUp.bat            # Main batch script
+├── README.md             # Read me
+└── configs\              
+     ├── study.txt
+     ├── work.txt
+     └── ...
+├── history\
+│    ├── history.txt      # Session history log
+│    └── usage_count.txt  # Usage count
 └── doc\
 ```
 ## 🧑‍💻 Author
@@ -32,3 +34,7 @@ Get rid of opening all these files and apps every time I want to kick off study!
     - Multiple Chrome profiles support
     - Custom config for different purposes
     - Session history logging
+- **v1.1.0** (2025-08-02)  
+  - Updated release with:
+    - automate scan user's config files
+    - URL usage count in  history\usage_count.txt
