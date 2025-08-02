@@ -3,31 +3,45 @@
 chcp 65001 >nul
 setlocal enabledelayedexpansion
 
+:: ===== Always run from script's folder =====
+cd /d "%~dp0"
+
 :: ===== Chrome path =====
 set "CHROME_PATH=C:\Program Files\Google\Chrome\Application\chrome.exe"
 
-:: ===== Ensure history folder exists =====
+:: ===== Ensure required folders exist =====
 if not exist "history" mkdir "history"
-set "HISTORY_FILE=history\history.txt"
+if not exist "configs" mkdir "configs"
 
-:: ===== Main menu =====
+:: ===== Paths =====
+set "HISTORY_FILE=history\history.txt"
+set "USAGE_FILE=history\usage_count.txt"
+
+:: ===== List available configs =====
 cls
 echo ==========================================
-echo 🚀 Welcome to LinkUp 🚀
-echo Your magic shortcut to work ^& study
+echo      🗡️   LinkUp Adventure  🗡️
+echo   Choose your path, brave traveler!
 echo ==========================================
 echo.
-echo 1 - Study
-echo 2 - Work
-set /p choice=Select config (1/2): 
+set "i=0"
+for %%F in (configs\*.txt) do (
+    set /a i+=1
+    set "CFG_!i!=%%F"
+    echo !i! - %%~nF
+)
+echo.
+set /p choice=Select config number: 
 
-if "%choice%"=="1" set "CONFIG_FILE=configs\study.txt"
-if "%choice%"=="2" set "CONFIG_FILE=configs\work.txt"
-
-if not exist "%CONFIG_FILE%" (
-    echo [ERROR] Cannot find config: %CONFIG_FILE%
+:: ===== Get selected config =====
+set "CONFIG_FILE="
+for /l %%n in (1,1,%i%) do (
+    if "!choice!"=="%%n" set "CONFIG_FILE=!CFG_%%n!"
+)
+if "%CONFIG_FILE%"=="" (
+    echo [ERROR] Invalid choice.
     pause
-    exit
+    exit /b
 )
 
 :: ===== Log session start =====
@@ -53,7 +67,10 @@ for /f "usebackq tokens=1,2* delims=|" %%A in ("%CONFIG_FILE%") do (
         :: Launch Chrome with the specific profile
         start "" "%CHROME_PATH%" --profile-directory="!PROFILE!" "!URL!"
 
-        :: Write to history: if NAME empty → log only URL
+        :: Update usage count
+        call :UPDATE_USAGE "!URL!"
+
+        :: Write to history
         if "!TMP!"=="" (
             echo [!PROFILE!] !URL! >> "%HISTORY_FILE%"
         ) else (
@@ -66,6 +83,31 @@ echo. >> "%HISTORY_FILE%"
 echo.
 echo ✅ All tabs ^& apps launched successfully!
 pause
-
 endlocal
-exit
+exit /b
+
+:: ===== Function: Update usage count =====
+:UPDATE_USAGE
+setlocal enabledelayedexpansion
+set "TARGET_URL=%~1"
+set "FOUND=0"
+set "TEMP_FILE=%TEMP%\usage_tmp.txt"
+
+if not exist "%USAGE_FILE%" type nul > "%USAGE_FILE%"
+
+(for /f "usebackq tokens=1,2 delims=|" %%u in ("%USAGE_FILE%") do (
+    if /i "%%u"=="%TARGET_URL%" (
+        set /a COUNT=%%v+1
+        echo %TARGET_URL%^|!COUNT!
+        set "FOUND=1"
+    ) else (
+        echo %%u^|%%v
+    )
+)) > "%TEMP_FILE%"
+
+if "!FOUND!"=="0" (
+    echo %TARGET_URL%^|1 >> "%TEMP_FILE%"
+)
+
+move /y "%TEMP_FILE%" "%USAGE_FILE%" >nul
+goto :eof
