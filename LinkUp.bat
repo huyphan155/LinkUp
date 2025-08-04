@@ -86,16 +86,23 @@ pause
 endlocal
 exit /b
 
+
 :: ===== Function: Update usage count =====
 :UPDATE_USAGE
 setlocal enabledelayedexpansion
 set "TARGET_URL=%~1"
 set "FOUND=0"
+
+:: ===== File paths =====
 set "TEMP_FILE=%TEMP%\usage_tmp.txt"
+set "PADDED_FILE=%TEMP%\usage_padded.txt"
+set "PADDED_SORTED_FILE=%TEMP%\usage_sorted_padded.txt"
+set "SORTED_FILE=%TEMP%\usage_sorted.txt"
 
-if not exist "%USAGE_FILE%" type nul > "%USAGE_FILE%"
+:: ===== Ensure required folders exist =====
+if not exist "%~dp0%USAGE_FILE%" type nul > "%~dp0%USAGE_FILE%"
 
-(for /f "usebackq tokens=1,2 delims=|" %%u in ("%USAGE_FILE%") do (
+(for /f "usebackq tokens=1,2 delims=|" %%u in ("%~dp0%USAGE_FILE%") do (
     if /i "%%u"=="%TARGET_URL%" (
         set /a COUNT=%%v+1
         echo %TARGET_URL%^|!COUNT!
@@ -103,11 +110,38 @@ if not exist "%USAGE_FILE%" type nul > "%USAGE_FILE%"
     ) else (
         echo %%u^|%%v
     )
-)) > "%TEMP_FILE%"
+)) > "!TEMP_FILE!"
 
 if "!FOUND!"=="0" (
-    echo %TARGET_URL%^|1 >> "%TEMP_FILE%"
+    echo %TARGET_URL%^|1 >> "!TEMP_FILE!"
 )
 
-move /y "%TEMP_FILE%" "%USAGE_FILE%" >nul
+move /y "!TEMP_FILE!" "%~dp0%USAGE_FILE%" >nul
+
+:: ===== Sort usage_count.txt by usage descending =====
+(
+for /f "tokens=1,2 delims=|" %%a in ('type "%~dp0%USAGE_FILE%"') do (
+    set "NUM=000%%b"
+    set "NUM=!NUM:~-3!"
+    echo !NUM!^|%%a
+)
+) > "!PADDED_FILE!"
+
+sort /R "!PADDED_FILE!" > "!PADDED_SORTED_FILE!"
+
+(
+for /f "tokens=1* delims=|" %%a in ('type "!PADDED_SORTED_FILE!"') do (
+    echo %%b^|%%a
+)
+) > "!SORTED_FILE!"
+
+move /y "!SORTED_FILE!" "%~dp0%USAGE_FILE%" >nul
+
+:: Delete temp files
+del /q "!PADDED_FILE!" >nul 2>&1
+del /q "!PADDED_SORTED_FILE!" >nul 2>&1
+del /q "!SORTED_FILE!" >nul 2>&1
+del /q "!TEMP_FILE!" >nul 2>&1
+
+endlocal
 goto :eof
