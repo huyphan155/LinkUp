@@ -38,3 +38,7 @@ Get rid of opening all these files and apps every time I want to kick off study!
   - Updated release with:
     - automate scan user's config files
     - URL usage count in  history\usage_count.txt
+- **v1.1.1** (2025-08-04)  
+  - Updated version with:
+    - SORT descending in usage count in history\usage_count.txt
+    - Pomodoro Mode ⏱️ option

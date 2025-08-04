@@ -52,3 +52,24 @@
 ==== Mon 08/04/2025 21:17:10.94 - Open from configs\work.txt ==== 
 [Default ] Github Code Repo - https://github.com  
  
+ 
+==== Mon 08/04/2025 21:54:29.32 - Open from configs\study.txt ==== 
+[Default ] Github Code Repo - https://github.com  
+[Default ] ChatGPT Assistant - https://chatgpt.com  
+[Default ]  - https://pomofocus.io 
+[Profile 1 ] Notion arm-cortex-m3m4 Notes - https://www.notion.so/huyphann155/arm-cortex-m3m4-238f5b92155e8066a1ddd112e84b9f9f  
+[Profile 1 ] Udemy arm-cortex Course - https://www.udemy.com/course/embedded-system-programming-on-arm-cortex-m3m4/learn/lecture/9079534#overview  
+ 
+==== Mon 08/04/2025 21:56:53.35 - Open from configs\study.txt ==== 
+[Default ] Github Code Repo - https://github.com  
+[Default ] ChatGPT Assistant - https://chatgpt.com  
+[Default ]  - https://pomofocus.io 
+[Profile 1 ] Notion arm-cortex-m3m4 Notes - https://www.notion.so/huyphann155/arm-cortex-m3m4-238f5b92155e8066a1ddd112e84b9f9f  
+[Profile 1 ] Udemy arm-cortex Course - https://www.udemy.com/course/embedded-system-programming-on-arm-cortex-m3m4/learn/lecture/9079534#overview  
+ 
+==== Mon 08/04/2025 22:00:18.79 - Open from configs\work.txt ==== 
+[Default ] Github Code Repo - https://github.com  
+ 
+==== Mon 08/04/2025 22:00:54.86 - Open from configs\work.txt ==== 
+[Default ] Github Code Repo - https://github.com  
+ 

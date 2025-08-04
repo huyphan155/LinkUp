@@ -33,13 +33,20 @@ for %%F in (configs\*.txt) do (
 echo.
 set /p choice=Select config number: 
 
+:: ===== Validate choice =====
+for /f "delims=0123456789" %%x in ("!choice!") do (
+    echo [ERROR] Please enter a number from the menu.
+    pause
+    exit /b
+)
+
 :: ===== Get selected config =====
 set "CONFIG_FILE="
 for /l %%n in (1,1,%i%) do (
-    if "!choice!"=="%%n" set "CONFIG_FILE=!CFG_%%n!"
+    if /i "!choice!"=="%%n" set "CONFIG_FILE=!CFG_%%n!"
 )
-if "%CONFIG_FILE%"=="" (
-    echo [ERROR] Invalid choice.
+if "!CONFIG_FILE!"=="" (
+    echo [ERROR] Invalid choice number.
     pause
     exit /b
 )
@@ -80,6 +87,15 @@ for /f "usebackq tokens=1,2* delims=|" %%A in ("%CONFIG_FILE%") do (
 )
 
 echo. >> "%HISTORY_FILE%"
+
+:: ===== Pomodoro Mode =====
+echo.
+set /p OPEN_POMODORO=📅 Do you want to start Pomodoro Timer? (Y/N): 
+if /i "!OPEN_POMODORO!"=="Y" (
+    echo 🕒 Opening Pomofocus...
+    start "" "%CHROME_PATH%" --profile-directory="Default" "https://pomofocus.io"
+)
+
 echo.
 echo ✅ All tabs ^& apps launched successfully!
 pause
@@ -93,13 +109,13 @@ setlocal enabledelayedexpansion
 set "TARGET_URL=%~1"
 set "FOUND=0"
 
-:: ===== File paths =====
+:: ===== Temp file paths =====
 set "TEMP_FILE=%TEMP%\usage_tmp.txt"
 set "PADDED_FILE=%TEMP%\usage_padded.txt"
 set "PADDED_SORTED_FILE=%TEMP%\usage_sorted_padded.txt"
 set "SORTED_FILE=%TEMP%\usage_sorted.txt"
 
-:: ===== Ensure required folders exist =====
+:: Ensure usage_count.txt exists
 if not exist "%~dp0%USAGE_FILE%" type nul > "%~dp0%USAGE_FILE%"
 
 (for /f "usebackq tokens=1,2 delims=|" %%u in ("%~dp0%USAGE_FILE%") do (
@@ -137,7 +153,7 @@ for /f "tokens=1* delims=|" %%a in ('type "!PADDED_SORTED_FILE!"') do (
 
 move /y "!SORTED_FILE!" "%~dp0%USAGE_FILE%" >nul
 
-:: Delete temp files
+:: Clean temp files
 del /q "!PADDED_FILE!" >nul 2>&1
 del /q "!PADDED_SORTED_FILE!" >nul 2>&1
 del /q "!SORTED_FILE!" >nul 2>&1
