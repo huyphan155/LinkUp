@@ -42,3 +42,4 @@ Get rid of opening all these files and apps every time I want to kick off study!
   - Updated version with:
     - SORT descending in usage count in history\usage_count.txt
     - Pomodoro Mode ⏱️ option
+    - Update 🔥 Streak feature

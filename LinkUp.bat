@@ -1,25 +1,57 @@
 @echo off
-:: for emoji
+:: Enable UTF-8 for emoji
 chcp 65001 >nul
 setlocal enabledelayedexpansion
 
-:: ===== Always run from script's folder =====
+:: Always run from script's folder
 cd /d "%~dp0"
 
-:: ===== Chrome path =====
+:: Chrome executable path
 set "CHROME_PATH=C:\Program Files\Google\Chrome\Application\chrome.exe"
 
-:: ===== Ensure required folders exist =====
+:: Ensure required folders exist
 if not exist "history" mkdir "history"
 if not exist "configs" mkdir "configs"
+
+:: ===== Daily Streak Tracking =====
+set "STREAK_FILE=history\streak.txt"
+set "TODAY=%date:~10,4%-%date:~4,2%-%date:~7,2%"  :: yyyy-mm-dd format
+
+if not exist "%STREAK_FILE%" (
+    echo %TODAY%^|1 > "%STREAK_FILE%"
+) else (
+    for /f "tokens=1,2 delims=|" %%a in (%STREAK_FILE%) do (
+        set "LAST_DATE=%%a"
+        set "STREAK=%%b"
+    )
+
+    for /f %%i in ('powershell -NoProfile -Command "(New-TimeSpan -Start (Get-Date '%LAST_DATE%') -End (Get-Date '%TODAY%')).Days"') do set "DIFF=%%i"
+
+    if "!DIFF!"=="0" (
+        rem Same day -> keep streak
+    ) else if "!DIFF!"=="1" (
+        rem Next day -> increase streak
+        set /a STREAK+=1
+    ) else (
+        rem Missed 2+ days -> reset streak
+        set "STREAK=1"
+    )
+
+    echo %TODAY%^|!STREAK! > "%STREAK_FILE%"
+)
+
+:: Always show streak
+for /f "tokens=1,2 delims=|" %%a in (%STREAK_FILE%) do set "SHOW_STREAK=%%b"
+echo ==========================================
+echo 🔥 Streak: !SHOW_STREAK! day(s) in a row!
+echo ==========================================
+echo.
 
 :: ===== Paths =====
 set "HISTORY_FILE=history\history.txt"
 set "USAGE_FILE=history\usage_count.txt"
 
 :: ===== List available configs =====
-cls
-echo ==========================================
 echo      🗡️   LinkUp Adventure  🗡️
 echo   Choose your path, brave traveler!
 echo ==========================================
@@ -34,8 +66,9 @@ echo.
 set /p choice=Select config number: 
 
 :: ===== Validate choice =====
-for /f "delims=0123456789" %%x in ("!choice!") do (
-    echo [ERROR] Please enter a number from the menu.
+set /a testnum=%choice% >nul 2>&1
+if "%testnum%" NEQ "%choice%" (
+    echo [ERROR] Please enter a valid number from the menu.
     pause
     exit /b
 )
