@@ -159,15 +159,15 @@ setlocal enabledelayedexpansion
 set "TARGET_URL=%~1"
 set "FOUND=0"
 
-:: ===== Temp file paths =====
+:: Temp files
 set "TEMP_FILE=%TEMP%\usage_tmp.txt"
 set "PADDED_FILE=%TEMP%\usage_padded.txt"
-set "PADDED_SORTED_FILE=%TEMP%\usage_sorted_padded.txt"
 set "SORTED_FILE=%TEMP%\usage_sorted.txt"
 
 :: Ensure usage_count.txt exists
 if not exist "%~dp0%USAGE_FILE%" type nul > "%~dp0%USAGE_FILE%"
 
+:: Update count or add new
 (for /f "usebackq tokens=1,2 delims=|" %%u in ("%~dp0%USAGE_FILE%") do (
     if /i "%%u"=="%TARGET_URL%" (
         set /a COUNT=%%v+1
@@ -184,30 +184,33 @@ if "!FOUND!"=="0" (
 
 move /y "!TEMP_FILE!" "%~dp0%USAGE_FILE%" >nul
 
-:: ===== Sort usage_count.txt by usage descending =====
+:: Create padded list for sort
 (
 for /f "tokens=1,2 delims=|" %%a in ('type "%~dp0%USAGE_FILE%"') do (
-    set "NUM=000%%b"
-    set "NUM=!NUM:~-3!"
-    echo !NUM!^|%%a
+    if not "%%a"=="" if not "%%b"=="" (
+        set "NUM=000%%b"
+        set "NUM=!NUM:~-3!"
+        echo !NUM!^|%%a
+    )
 )
 ) > "!PADDED_FILE!"
 
-sort /R "!PADDED_FILE!" > "!PADDED_SORTED_FILE!"
+:: Sort by padded number (desc)
+sort /R "!PADDED_FILE!" > "!SORTED_FILE!"
 
+:: Rewrite usage_count.txt as URL|count
 (
-for /f "tokens=1* delims=|" %%a in ('type "!PADDED_SORTED_FILE!"') do (
-    echo %%b^|%%a
+for /f "tokens=1* delims=|" %%a in ('type "!SORTED_FILE!"') do (
+    set "NUM=%%a"
+    set "URL=%%b"
+    set /a REALNUM=!NUM!
+    echo !URL!^|!REALNUM!
 )
-) > "!SORTED_FILE!"
+) > "%~dp0%USAGE_FILE%"
 
-move /y "!SORTED_FILE!" "%~dp0%USAGE_FILE%" >nul
-
-:: Clean temp files
-del /q "!PADDED_FILE!" >nul 2>&1
-del /q "!PADDED_SORTED_FILE!" >nul 2>&1
-del /q "!SORTED_FILE!" >nul 2>&1
-del /q "!TEMP_FILE!" >nul 2>&1
+:: Clean temp
+del /q "!PADDED_FILE!" "!SORTED_FILE!" >nul 2>&1
 
 endlocal
 goto :eof
+

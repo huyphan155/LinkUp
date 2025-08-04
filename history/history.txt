@@ -105,3 +105,19 @@
 ==== Mon 08/04/2025 22:37:24.55 - Open from configs\work.txt ==== 
 [Default ] Github Code Repo - https://github.com  
  
+==== Mon 08/04/2025 22:44:39.53 - Open from configs\work.txt ==== 
+[Default ] Github Code Repo - https://github.com  
+ 
+==== Mon 08/04/2025 22:45:57.24 - Open from configs\work.txt ==== 
+[Default ] Github Code Repo - https://github.com  
+ 
+==== Mon 08/04/2025 22:46:14.68 - Open from configs\study.txt ==== 
+[Default ] Github Code Repo - https://github.com  
+[Default ] ChatGPT Assistant - https://chatgpt.com  
+[Default ]  - https://pomofocus.io 
+[Profile 1 ] Notion arm-cortex-m3m4 Notes - https://www.notion.so/huyphann155/arm-cortex-m3m4-238f5b92155e8066a1ddd112e84b9f9f  
+[Profile 1 ] Udemy arm-cortex Course - https://www.udemy.com/course/embedded-system-programming-on-arm-cortex-m3m4/learn/lecture/9079534#overview  
+ 
+==== Mon 08/04/2025 22:48:45.12 - Open from configs\work.txt ==== 
+[Default ] Github Code Repo - https://github.com  
+ 
