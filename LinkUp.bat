@@ -92,8 +92,10 @@ echo. >> "%HISTORY_FILE%"
 echo.
 set /p OPEN_POMODORO=📅 Do you want to start Pomodoro Timer? (Y/N): 
 if /i "!OPEN_POMODORO!"=="Y" (
-    echo 🕒 Opening Pomofocus...
+    echo 🕒 Opening Pomofocus and starting timer...
     start "" "%CHROME_PATH%" --profile-directory="Default" "https://pomofocus.io"
+    timeout /t 5 >nul
+    powershell -Command "$wshell = New-Object -ComObject wscript.shell; $wshell.AppActivate('Pomofocus'); Start-Sleep -Milliseconds 500; $wshell.SendKeys(' ')"
 )
 
 echo.

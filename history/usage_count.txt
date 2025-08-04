@@ -2,5 +2,5 @@ https://www.udemy.com/course/embedded-system-programming-on-arm-cortex-m3m4/lear
 https://www.notion.so/huyphann155/arm-cortex-m3m4-238f5b92155e8066a1ddd112e84b9f9f |006
 https://pomofocus.io|006
 https://chatgpt.com |006
-https://github.com |003
+https://github.com |004
 1 |000
