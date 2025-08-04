@@ -3,13 +3,13 @@
 chcp 65001 >nul
 setlocal enabledelayedexpansion
 
-:: Always run from script's folder
+:: ===== Always run from script's folder =====
 cd /d "%~dp0"
 
-:: Chrome executable path
+:: ===== Chrome path =====
 set "CHROME_PATH=C:\Program Files\Google\Chrome\Application\chrome.exe"
 
-:: Ensure required folders exist
+:: ===== Ensure required folders exist =====
 if not exist "history" mkdir "history"
 if not exist "configs" mkdir "configs"
 
@@ -82,6 +82,21 @@ if "!CONFIG_FILE!"=="" (
     echo [ERROR] Invalid choice number.
     pause
     exit /b
+)
+
+:: ===== Countdown before launch =====
+set /a count=3
+echo.
+echo You selected: !CONFIG_FILE!
+echo Opening in %count% seconds... Press ENTER to launch now, Ctrl+C to cancel.
+
+for /l %%i in (%count%,-1,1) do (
+    choice /t 1 /d N /n >nul
+    if errorlevel 255 exit /b
+    set /a remaining=%%i
+    if !remaining! EQU 3 (echo 🟨 !remaining!)
+    if !remaining! EQU 2 (echo 🟩 !remaining!)
+    if !remaining! EQU 1 (echo 🟦 !remaining!)
 )
 
 :: ===== Log session start =====
