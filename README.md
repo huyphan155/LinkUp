@@ -15,8 +15,7 @@ LinkUp\
 ├── LinkUp.bat            # Main batch script
 ├── README.md             # Read me
 └── configs\              
-     ├── study.txt
-     ├── work.txt
+     ├── "config_name".txt
      └── ...
 ├── history\
 │    ├── history.txt      # Session history log
@@ -45,3 +44,7 @@ Get rid of opening all these files and apps every time I want to kick off study!
     - Pomodoro Mode ⏱️ option
     - Update 🔥 Streak feature
     - Countdown before launch
+- **v2.0.0** (2025-08-07)
+  - Updated release with:
+    - Migrated from BAT script to PowerShell (.ps1) for improved flexibility and maintainability.
+    - Added modern WPF GUI (Windows Presentation Foundation)

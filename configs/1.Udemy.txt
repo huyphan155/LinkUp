@@ -3,7 +3,6 @@
 # ==== Link for Profile Default ====
 Default | https://github.com | Github Code Repo
 Default | https://chatgpt.com | ChatGPT Assistant
-Default | https://pomofocus.io
 
 
 # ==== Link for Profile 1 ====
