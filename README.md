@@ -21,6 +21,7 @@ LinkUp\
 ├── history\
 │    ├── history.txt      # Session history log
 │    └── usage_count.txt  # Usage count
+│    └── streak.txt       # streak day(s) in a row
 └── doc\
 ```
 ## 🧑‍💻 Author
