@@ -1,2 +1,4 @@
-# ==== Link cho Profile Default ====
-Default | https://github.com | Github Code Repo
+# ==== Link for Profile Default ====
+web | Default | https://github.com | Github Code Repo
+app | C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Notepad++.lnk | Notepad ++
+

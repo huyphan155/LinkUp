@@ -149,7 +149,10 @@ function Update-UsageCount {
 #   - Logs history to history.txt
 $LaunchButton.Add_Click({
     $selected = $ConfigList.SelectedItem
-    if (-not $selected) { [System.Windows.MessageBox]::Show("Please select a config first.") ; return }
+    if (-not $selected) {
+        [System.Windows.MessageBox]::Show("Please select a config first.") 
+        return
+    }
 
     $configPath = Join-Path $ConfigDir $selected
 
@@ -159,29 +162,38 @@ $LaunchButton.Add_Click({
 
     foreach ($line in Get-Content $configPath) {
         if ($line.Trim() -eq "" -or $line.Trim().StartsWith("#")) { continue }
-        $parts = $line -split '\|'
-        $profile = $parts[0].Trim()
-        $url = $parts[1].Trim()
-        $name = ""
-        if ($parts.Count -ge 3) { $name = $parts[2].Trim() }
 
-        # Open Chrome with profile
-        Start-Process $ChromePath "--profile-directory=`"$profile`" $url"
+        # Split & Trim all parts
+        $parts = $line -split '\|' | ForEach-Object { $_.Trim() }
 
-        # Update usage count
-        Update-UsageCount $url
+        $type    = $parts[0].ToLower()
+        $profile = $parts[1]
+        $target  = $parts[2]
+        $name    = if ($parts.Count -ge 4) { $parts[3] } else { "" }
 
-        # Log to history
-        if ($name -eq "") {
-            Add-Content $HistoryFile "[${profile}] $url"
-        } else {
-            Add-Content $HistoryFile "[${profile}] $name - $url"
+        switch ($type) {
+            "web" {
+                Start-Process $ChromePath "--profile-directory=`"$profile`" $target"
+                Update-UsageCount $target
+                Add-Content $HistoryFile "[web] $name - $target"
+            }
+            "app" {
+                if (Test-Path $profile) {
+                    Start-Process $profile
+                    Add-Content $HistoryFile "[app] $target"
+                }
+                else {
+                    [System.Windows.MessageBox]::Show("App not found: $profile")
+                }
+            }
         }
     }
 
     Add-Content $HistoryFile ""
     [System.Windows.MessageBox]::Show("All tabs & apps launched successfully!")
 })
+
+
 
 # =======================
 # Button: Pomodoro
