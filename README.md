@@ -4,24 +4,31 @@ LinkUp is a simple Windows batch tool that automatically opens Chrome tabs (with
 It also keeps a history log of what you opened and when.
 
 ## ✨ Features
-✅ **Multiple Chrome profiles** (`Default`, `Profile 1`, etc.)  
 ✅ **Custom config** for different purposes (Study, Work, etc.)  
-✅ **Logs session history** with time, profile, name, and URL
+✅ **Multiple Chrome profiles** (`Default`, `Profile 1`, etc.)  
+✅ **Logs session history** with time, profile, name, and URL  
+✅ **Tracks daily streaks**  
+✅ **Pomodoro timer integration**  
 
 ## 📂 Folder Structure
 ```
 LinkUp\
 │
-├── LinkUp.bat            # Main batch script
+├── LinkUp.vbs            # VBScript launcher to run to main executed (scripts\LinkUp.ps1)
 ├── README.md             # Read me
 └── configs\              
      ├── "config_name".txt
      └── ...
 ├── history\
 │    ├── history.txt      # Session history log
-│    └── usage_count.txt  # Usage count
+│    └── usage_count.txt  # Usage URL count
 │    └── streak.txt       # streak day(s) in a row
-└── doc\
+├── scripts\
+│    ├── LinkUp.ps1       # Main Executed
+│    └── Functions.ps1    # Functions
+│    └── Buttons.ps1      # Button event handlers
+│    └── UI.xaml          # WPF UI Layout
+└── doc\                  # Documentation and notes
 ```
 ## 🧑‍💻 Author
 Created by **huyphan155** - https://github.com/huyphan155
@@ -44,7 +51,8 @@ Get rid of opening all these files and apps every time I want to kick off study!
     - Pomodoro Mode ⏱️ option
     - Update 🔥 Streak feature
     - Countdown before launch
-- **v2.0.0** (2025-08-07)
+- **v2.0.0** (2025-08-09)
   - Updated release with:
     - Migrated from BAT script to PowerShell (.ps1) for improved flexibility and maintainability.
     - Added modern WPF GUI (Windows Presentation Foundation)
+    - Re-Organize folder structure
