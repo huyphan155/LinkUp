@@ -1,6 +1,6 @@
 # 🚀 LinkUp
 
-LinkUp is a simple Windows batch tool that automatically opens Chrome tabs (with chosen profiles) and apps from a config file.
+LinkUp is a simple tool that automatically opens Chrome tabs (with chosen profiles) and apps from a config file.
 It also keeps a history log of what you opened and when.
 
 ## ✨ Features
@@ -27,13 +27,36 @@ LinkUp\
 │    ├── LinkUp.ps1       # Main Executed
 │    └── Functions.ps1    # Functions
 │    └── Buttons.ps1      # Button event handlers
-│    └── UI.xaml          # WPF UI Layout
+│    └── UserUI\              
+│         ├── "UI".txt    # WPF UI Layout
+│         └── ...
 └── doc\                  # Documentation and notes
 ```
 ## 🧑‍💻 Author
 Created by **huyphan155** - https://github.com/huyphan155
 
 Get rid of opening all these files and apps every time I want to kick off study!
+
+## Setup
+
+- You need to manually set your Chrome executable path in the `$ChromePath` variable inside `/scripts/Functions.ps1 `
+
+  - By Default:  `$ChromePath  = "C:\Program Files\Google\Chrome\Application\chrome.exe"`
+
+- You also can change the UI in `/scripts/LinkUp.ps1 `
+By Default is using  `UI.xaml""`
+
+## Setup
+
+**You need to manually set your Chrome executable path in the `$ChromePath` variable inside `/scripts/Functions.ps1`**  
+   - By Default :  
+     ```powershell
+     $ChromePath = "C:\Program Files\Google\Chrome\Application\chrome.exe"
+     ```
+
+**You can customize the UI by editing the `/script/LinkUp.ps1`**  
+   - By default, it loads the UI from: `UI.xaml`
+
 
 ## 📅 Changelog
 - **v1.0.0** (2025-08-02)  
@@ -56,3 +79,4 @@ Get rid of opening all these files and apps every time I want to kick off study!
     - Migrated from BAT script to PowerShell (.ps1) for improved flexibility and maintainability.
     - Added modern WPF GUI (Windows Presentation Foundation)
     - Re-Organize folder structure
+    - Customize UI

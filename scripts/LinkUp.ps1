@@ -1,7 +1,7 @@
 ﻿Add-Type -AssemblyName PresentationFramework
 
 # Load UI
-[xml]$xaml = Get-Content -Raw -Path "$PSScriptRoot\UI.xaml"
+[xml]$xaml = Get-Content -Raw -Path "$PSScriptRoot\UserUI\UI.xaml"
 $reader = (New-Object System.Xml.XmlNodeReader $xaml)
 $window = [Windows.Markup.XamlReader]::Load($reader)
 

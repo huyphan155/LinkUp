@@ -23,7 +23,7 @@ if (!(Test-Path $StreakFile)) {
 
 # Display current streak in the UI
 $parts = Get-Content $StreakFile -Raw | ForEach-Object { $_ -split '\|' }
-$StreakLabel.Text = "🔥 Streak: $($parts[1]) day(s) in a row"
+$StreakLabel.Text = "🔥 Streak: $($parts[1])"
 
 # =======================
 # Load Config Files
