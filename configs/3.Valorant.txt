@@ -1,0 +1,3 @@
+# ==== Link for Profile Default ====
+web |Default | https://discord.com/channels/1232704579251077170/1232704579804594240 | Discord Channel
+app | C:\Users\Public\Desktop\VALORANT.lnk | VALORANT 

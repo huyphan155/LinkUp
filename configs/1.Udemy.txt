@@ -1,0 +1,12 @@
+# =========== Format template =============
+# web | Profile | URL | ShortName
+# app | AppPath | ShortName
+# =========================================
+
+# ==== Link for Profile Default ====
+web | Default | https://github.com | Github Code Repo
+web | Default | https://chatgpt.com | ChatGPT Assistant
+
+# ==== Link for Profile 1 ====
+web | Profile 1 | https://www.notion.so/huyphann155/arm-cortex-m3m4-238f5b92155e8066a1ddd112e84b9f9f | Notion arm-cortex-m3m4 Notes
+web | Profile 1 | https://www.udemy.com/course/embedded-system-programming-on-arm-cortex-m3m4/learn/lecture/9079534#overview | Udemy arm-cortex Course

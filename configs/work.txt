@@ -1,2 +1,0 @@
-# ==== Link cho Profile Default ====
-Default | https://github.com | Github Code Repo
