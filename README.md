@@ -14,23 +14,27 @@ It also keeps a history log of what you opened and when.
 ```
 LinkUp\
 │
-├── LinkUp.vbs            # VBScript launcher to run to main executed (scripts\LinkUp.ps1)
-├── README.md             # Read me
-└── configs\              
-     ├── "config_name".txt
-     └── ...
+├── LinkUp.vbs                            # VBScript launcher (run main Executed scripts\LinkUp.ps1)
+├── README.md                             # Read me
+├── configs\              
+│    ├── "config_name".txt
+│    └── ...
 ├── history\
-│    ├── history.txt      # Session history log
-│    └── usage_count.txt  # Usage URL count
-│    └── streak.txt       # streak day(s) in a row
+│    ├── history.txt                      # Session history log
+│    ├── usage_count.txt                  # Usage URL count
+│    └── streak.txt                       # streak day(s) in a row
 ├── scripts\
-│    ├── LinkUp.ps1       # Main Executed
-│    └── Functions.ps1    # Functions
-│    └── Buttons.ps1      # Button event handlers
+│    ├── LinkUp.ps1                       # Main Executed
+│    ├── Functions.ps1                    # Functions
+│    ├── Buttons.ps1                      # Button event handlers
 │    └── UserUI\              
-│         ├── "UI".txt    # WPF UI Layout
-│         └── ...
-└── doc\                  # Documentation and notes
+│         ├── "UI".txt                    # WPF UI Layout
+│         ├── ...
+│         └── Icon\       
+│               ├── ShortCutCreate.vbs    # Generates desktop shortcut
+│               ├── "icon.ico"            # Icon for ShortCut
+│               └── ...
+└── doc\                                  # Documentation and notes
 ```
 ## 🧑‍💻 Author
 Created by **huyphan155** - https://github.com/huyphan155
@@ -57,6 +61,8 @@ By Default is using  `UI.xaml""`
 **You can customize the UI by editing the `/script/LinkUp.ps1`**  
    - By default, it loads the UI from: `UI.xaml`
 
+**Run `scripts\UserUI\Icon\ShortCutCreate.vbs` to generate a LinkUp.lnk shortcut on your Desktop**  
+   - Replace the .ico in ShortCutCreate.vbs with your preferred icon.
 
 ## 📅 Changelog
 - **v1.0.0** (2025-08-02)  
@@ -80,3 +86,7 @@ By Default is using  `UI.xaml""`
     - Added modern WPF GUI (Windows Presentation Foundation)
     - Re-Organize folder structure
     - Customize UI
+- **v2.0.1** (2025-08-10)
+  - Updated release with:
+    - Add LinkUp shortcut and icon list
+    - Add ShortCutCreate.vbs script
