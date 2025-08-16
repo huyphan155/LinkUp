@@ -107,3 +107,4 @@ Save these exported CSV files into export CSV file to `/tabs_export`
 - **v2.1.0** (2025-08-16)
   - Updated release with:
     - Add Tab Scan Button.
+    - Add Caculator Button
