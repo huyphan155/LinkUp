@@ -76,6 +76,8 @@
                     Background="#27AE60"/>
             <Button x:Name="PomodoroButton" Content="⏱ Pomodoro"
                     Background="#2980B9"/>
+            <Button x:Name="ScanTabsButton" Content="📁 Scan Tabs"
+                    Background="#34495E"/>
             <Button x:Name="ExitButton" Content="❌ Exit"
                     Background="#C0392B"/>
         </StackPanel>
