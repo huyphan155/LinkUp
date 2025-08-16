@@ -78,6 +78,8 @@
                     Background="#2980B9"/>
             <Button x:Name="ScanTabsButton" Content="📁 Scan Tabs"
                     Background="#34495E"/>
+            <Button x:Name="OpenCalcButton" Content="🧮 Calculator"
+                    Background="#9B59B6"/>
             <Button x:Name="ExitButton" Content="❌ Exit"
                     Background="#C0392B"/>
         </StackPanel>
