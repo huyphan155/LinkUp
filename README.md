@@ -9,6 +9,7 @@ It also keeps a history log of what you opened and when.
 ✅ **Logs session history** with time, profile, name, and URL  
 ✅ **Tracks daily streaks**  
 ✅ **Pomodoro timer integration**  
+✅ **Convert specific CSV files to config files (Instruction below)**
 
 ## 📂 Folder Structure
 ```
@@ -34,6 +35,9 @@ LinkUp\
 │               ├── ShortCutCreate.vbs    # Generates desktop shortcut
 │               ├── "icon.ico"            # Icon for ShortCut
 │               └── ...
+├── scripts\
+│    ├── "Default".csv                    # CSV files input to convert into LinkUp configuration file.
+│    └── ...
 └── doc\                                  # Documentation and notes
 ```
 ## 🧑‍💻 Author
@@ -48,7 +52,17 @@ Get rid of opening all these files and apps every time I want to kick off study!
   - By Default:  `$ChromePath  = "C:\Program Files\Google\Chrome\Application\chrome.exe"`
 
 - You also can change the UI in `/scripts/LinkUp.ps1 `
-By Default is using  `UI.xaml""`
+By Default is using  `UI.xaml`
+
+## Convert specific CSV files to config files
+This feature allows you to export your open tabs from Chrome into CSV files and then convert them into a single, usable LinkUp configuration file
+
+Install this extention at this link : `https://github.com/huyphan155/ChromeTabCSVExporter` to chrome (Developer mode). 
+Export your current tabs from Chrome to CSV file. 
+Save these exported CSV files into export CSV file to `/tabs_export`
+
+- Run LinkUP and Use `Scan Tabs` feature on the application Interface.
+
 
 ## Setup
 
@@ -90,3 +104,7 @@ By Default is using  `UI.xaml""`
   - Updated release with:
     - Add LinkUp shortcut and icon list
     - Add ShortCutCreate.vbs script
+- **v2.1.0** (2025-08-16)
+  - Updated release with:
+    - Add Tab Scan Button.
+    - Add Caculator Button

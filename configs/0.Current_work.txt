@@ -1,0 +1,2 @@
+﻿web | Default | https://github.com/huyphan155/LinkUp | huyphan155/LinkUp: Get rid of opening all these files and apps every time I want to kick off study!
+web | Profile 1 | https://www.notion.so/huyphann155/arm-cortex-m3m4-238f5b92155e8066a1ddd112e84b9f9f | arm-cortex-m3m4
