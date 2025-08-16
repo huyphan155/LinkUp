@@ -75,6 +75,19 @@ $ScanTabsButton.Add_Click({
 })
 
 # =======================
+# Button: Open Calculator
+# =======================
+# Opens Calculator
+$OpenCalcButton.Add_Click({
+    try {
+        Start-Process "calc.exed"
+    }
+    catch {
+        [System.Windows.MessageBox]::Show("Cannot Open Calculator: $($_.Exception.Message)", "LinkUp - Error", "OK", "Error")
+    }
+})
+
+# =======================
 # Button: Exit
 # =======================
 # Closes the application window

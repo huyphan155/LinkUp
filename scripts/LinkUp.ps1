@@ -11,6 +11,7 @@ $ConfigList     = $window.FindName("ConfigList")
 $LaunchButton   = $window.FindName("LaunchButton")
 $PomodoroButton = $window.FindName("PomodoroButton")
 $ScanTabsButton = $window.FindName("ScanTabsButton")
+$OpenCalcButton = $window.FindName("OpenCalcButton")
 $ExitButton     = $window.FindName("ExitButton")
 
 # =======================
