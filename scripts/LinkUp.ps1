@@ -6,13 +6,19 @@ $reader = (New-Object System.Xml.XmlNodeReader $xaml)
 $window = [Windows.Markup.XamlReader]::Load($reader)
 
 # Bind UI controls to PowerShell variables
-$StreakLabel    = $window.FindName("StreakLabel")
-$ConfigList     = $window.FindName("ConfigList")
-$LaunchButton   = $window.FindName("LaunchButton")
-$PomodoroButton = $window.FindName("PomodoroButton")
-$ScanTabsButton = $window.FindName("ScanTabsButton")
+$StreakLabel             = $window.FindName("StreakLabel")
+$ConfigList              = $window.FindName("ConfigList")
+$LaunchButton            = $window.FindName("LaunchButton")
+$PomodoroButton          = $window.FindName("PomodoroButton")
+$ScanTabsButton          = $window.FindName("ScanTabsButton")
 $OpenCalcButton = $window.FindName("OpenCalcButton")
-$ExitButton     = $window.FindName("ExitButton")
+$OpenGithubButton        = $window.FindName("OpenGithubButton") # New GitHub button
+$OpenNotionButton        = $window.FindName("OpenNotionButton") # New Notion button
+$OpenSTM32CubeIDEButton  = $window.FindName("OpenSTM32CubeIDEButton") # New STM32CubeIDE button
+$OpenFileExplorerButton  = $window.FindName("OpenFileExplorerButton") # New File Explorer button
+$OpenBeyondCompareButton = $window.FindName("OpenBeyondCompareButton") # New Beyond Compare button
+$OpenVSCodeButton        = $window.FindName("OpenVSCodeButton") # New VS Code button
+$ExitButton              = $window.FindName("ExitButton")
 
 # =======================
 # Paths & Constants
@@ -32,7 +38,13 @@ $outputTextFilePath = Join-Path $ConfigDir "0.Current_work.txt"
 # =======================
 # User Input Path
 # =======================
-$ChromePath   = "C:\Program Files\Google\Chrome\Application\chrome.exe"
+$ChromePath         = "C:\Program Files\Google\Chrome\Application\chrome.exe"
+$GithubUrl          = "https://github.com/huyphan155" 
+$NotionUrl          = "https://www.notion.so/huyphann155/arm-cortex-m3m4-238f5b92155e8066a1ddd112e84b9f9f" 
+$STM32CubeIDEPath   = "C:\ST\STM32CubeIDE_1.14.1\STM32CubeIDE\stm32cubeide.exe"
+$FileExplorerPath   = "D:\GitWork" 
+$BeyondComparePath  = "C:\Program Files\Beyond Compare 4\BCompare.exe"
+$VSCodePath         = "C:\Users\Admin\AppData\Local\Programs\Microsoft VS Code\Code.exe"
 
 # =======================
 # Ensure required folders exist

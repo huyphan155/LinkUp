@@ -1,33 +1,50 @@
 ﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="LinkUp Adventure" Height="450" Width="650"
-        Background="#FAFAFA" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="LinkUp Adventure" Height="650" Width="800"
+        Background="#F5F7FA" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
     <Window.Resources>
+
+        <!-- Global Font Setting -->
+        <Style TargetType="{x:Type Control}">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+        </Style>
 
         <!-- Style: Modern Rounded Button -->
         <Style TargetType="Button">
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Padding" Value="8,4"/>
-            <Setter Property="Margin" Value="6"/>
+            <Setter Property="Padding" Value="10,6"/>
+            <Setter Property="Margin" Value="8" />
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="border"
                                 Background="{TemplateBinding Background}"
-                                CornerRadius="8"
+                                CornerRadius="10"
                                 Padding="{TemplateBinding Padding}">
                             <ContentPresenter HorizontalAlignment="Center"
                                               VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#3498DB"/>
+                                <Setter TargetName="border" Property="Background">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Background.Color}">
+                                            <SolidColorBrush.Opacity>0.8</SolidColorBrush.Opacity>
+                                        </SolidColorBrush>
+                                    </Setter.Value>
+                                </Setter>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#1F618D"/>
+                                <Setter TargetName="border" Property="Background">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Background.Color}">
+                                            <SolidColorBrush.Opacity>0.6</SolidColorBrush.Opacity>
+                                        </SolidColorBrush>
+                                    </Setter.Value>
+                                </Setter>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter TargetName="border" Property="Background" Value="#BDC3C7"/>
@@ -36,42 +53,72 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+        </Style>
+
+        <!-- Style for ListBoxItem (simplified for maximum compatibility) -->
+        <Style x:Key="ListBoxItemStyle" TargetType="ListBoxItem">
+            <Setter Property="Padding" Value="8"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#34495E"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="BorderBrush" Value="#E0E0E0"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#E0F2F7"/>
+                    <Setter Property="Foreground" Value="#2980B9"/>
+                    <!-- Removed FontWeight="SemiBold" from here for wider compatibility -->
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#F2F2F2"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
 
     </Window.Resources>
 
-    <Grid Margin="20">
+    <Grid Margin="30">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/> <!-- Title -->
+            <RowDefinition Height="Auto"/> <!-- Streak -->
+            <RowDefinition Height="3*"/>  <!-- Config List -->
+            <RowDefinition Height="Auto"/> <!-- Buttons -->
         </Grid.RowDefinitions>
 
         <!-- Title -->
         <TextBlock Text="⚔ LinkUp Adventure"
-                   FontSize="28" FontWeight="Bold"
+                   FontSize="36" FontWeight="Bold"
                    Foreground="#2C3E50"
                    HorizontalAlignment="Center"
-                   Margin="0,0,0,15">
+                   Margin="0,0,0,25">
             <TextBlock.Effect>
-                <DropShadowEffect Color="#888" BlurRadius="5" ShadowDepth="2"/>
+                <DropShadowEffect Color="#AABECF" BlurRadius="8" ShadowDepth="4" Direction="270" Opacity="0.7"/>
             </TextBlock.Effect>
         </TextBlock>
 
         <!-- Streak -->
         <TextBlock x:Name="StreakLabel" Grid.Row="1"
-                   FontSize="18" Foreground="#E67E22"
-                   HorizontalAlignment="Center" Margin="0,0,0,20"/>
+                   FontSize="20" Foreground="#E67E22"
+                   HorizontalAlignment="Center" Margin="0,0,0,30"
+                   FontWeight="SemiBold"/>
 
         <!-- Config List -->
-        <ListBox x:Name="ConfigList" Grid.Row="2" FontSize="14"
-                 BorderBrush="#BDC3C7" BorderThickness="1"
-                 Background="White" Padding="5" />
-
-        <!-- Buttons -->
-        <StackPanel Grid.Row="3" Orientation="Horizontal"
-                    HorizontalAlignment="Center" Margin="0,25,0,0">
+        <Border Grid.Row="2" BorderBrush="#D1D8E0" BorderThickness="1"
+                Background="White" CornerRadius="8" Padding="10" Margin="0,0,0,20">
+            <Border.Effect>
+                <DropShadowEffect Color="#E0E0E0" BlurRadius="5" ShadowDepth="2" Opacity="0.5"/>
+            </Border.Effect>
+            <ListBox x:Name="ConfigList" FontSize="15"
+                     Background="Transparent" BorderThickness="0"
+                     ItemContainerStyle="{StaticResource ListBoxItemStyle}"/>
+        </Border>
+        
+        <!-- Buttons - WrapPanel -->
+        <WrapPanel Grid.Row="3" Orientation="Horizontal"
+                    HorizontalAlignment="Center" Margin="0,15,0,0"
+                    VerticalAlignment="Bottom">
             <Button x:Name="LaunchButton" Content="🚀 Launch"
                     Background="#27AE60"/>
             <Button x:Name="PomodoroButton" Content="⏱ Pomodoro"
@@ -80,8 +127,20 @@
                     Background="#34495E"/>
             <Button x:Name="OpenCalcButton" Content="🧮 Calculator"
                     Background="#9B59B6"/>
-            <Button x:Name="ExitButton" Content="❌ Exit"
+            <Button x:Name="OpenGithubButton" Content="🧩 GitHub"
+                    Background="#24292E"/>
+            <Button x:Name="OpenNotionButton" Content="📑 Notion"
+                    Background="#6A0DAD"/>
+            <Button x:Name="OpenSTM32CubeIDEButton" Content="⚙️ STM32CubeIDE"
                     Background="#C0392B"/>
-        </StackPanel>
+            <Button x:Name="OpenFileExplorerButton" Content="📂 File Explorer"
+                    Background="#F39C12"/>
+            <Button x:Name="OpenBeyondCompareButton" Content="↔️ Beyond Compare"
+                    Background="#1ABC9C"/>
+            <Button x:Name="OpenVSCodeButton" Content="💾 VS Code"
+                    Background="#007ACC"/>
+            <Button x:Name="ExitButton" Content="❌ Exit"
+                    Background="#E74C3C"/>
+        </WrapPanel>
     </Grid>
 </Window>
