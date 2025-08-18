@@ -108,3 +108,7 @@ Save these exported CSV files into export CSV file to `/tabs_export`
   - Updated release with:
     - Add Tab Scan Button.
     - Add Caculator Button
+- **v2.1.1** (2025-08-18)
+  - Updated release with:
+    - Add chatGPT button
+    - Add TextBox status message
