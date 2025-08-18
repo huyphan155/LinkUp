@@ -11,13 +11,15 @@ $ConfigList              = $window.FindName("ConfigList")
 $LaunchButton            = $window.FindName("LaunchButton")
 $PomodoroButton          = $window.FindName("PomodoroButton")
 $ScanTabsButton          = $window.FindName("ScanTabsButton")
-$OpenCalcButton = $window.FindName("OpenCalcButton")
-$OpenGithubButton        = $window.FindName("OpenGithubButton") # New GitHub button
-$OpenNotionButton        = $window.FindName("OpenNotionButton") # New Notion button
-$OpenSTM32CubeIDEButton  = $window.FindName("OpenSTM32CubeIDEButton") # New STM32CubeIDE button
-$OpenFileExplorerButton  = $window.FindName("OpenFileExplorerButton") # New File Explorer button
-$OpenBeyondCompareButton = $window.FindName("OpenBeyondCompareButton") # New Beyond Compare button
-$OpenVSCodeButton        = $window.FindName("OpenVSCodeButton") # New VS Code button
+$OpenCalcButton          = $window.FindName("OpenCalcButton")
+$OpenGithubButton        = $window.FindName("OpenGithubButton") 
+$OpenNotionButton        = $window.FindName("OpenNotionButton") 
+$OpenSTM32CubeIDEButton  = $window.FindName("OpenSTM32CubeIDEButton") 
+$OpenFileExplorerButton  = $window.FindName("OpenFileExplorerButton") 
+$OpenBeyondCompareButton = $window.FindName("OpenBeyondCompareButton") 
+$OpenVSCodeButton        = $window.FindName("OpenVSCodeButton")
+$OpenChatGPT             = $window.FindName("OpenChatGPT")
+$OpenGemini              = $window.FindName("OpenGemini")
 $ExitButton              = $window.FindName("ExitButton")
 
 # =======================
@@ -45,6 +47,8 @@ $STM32CubeIDEPath   = "C:\ST\STM32CubeIDE_1.14.1\STM32CubeIDE\stm32cubeide.exe"
 $FileExplorerPath   = "D:\GitWork" 
 $BeyondComparePath  = "C:\Program Files\Beyond Compare 4\BCompare.exe"
 $VSCodePath         = "C:\Users\Admin\AppData\Local\Programs\Microsoft VS Code\Code.exe"
+$ChatGPTUrl         = "https://chatgpt.com"
+$GeminiUrl          = "https://gemini.google.com/app"
 
 # =======================
 # Ensure required folders exist

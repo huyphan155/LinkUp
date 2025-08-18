@@ -1,0 +1,6 @@
+==== Mon 08/18/2025 21:29:35.06 - Open from configs\1.Udemy.txt ====
+[web] Github Code Repo - https://github.com
+[web] ChatGPT Assistant - https://chatgpt.com
+[web] Notion arm-cortex-m3m4 Notes - https://www.notion.so/huyphann155/arm-cortex-m3m4-238f5b92155e8066a1ddd112e84b9f9f
+[web] Udemy arm-cortex Course - https://www.udemy.com/course/embedded-system-programming-on-arm-cortex-m3m4/learn/lecture/9079534#overview
+

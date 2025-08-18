@@ -166,6 +166,32 @@ $OpenVSCodeButton.Add_Click({
 })
 
 # =======================
+# Button: Open ChatGPT
+# =======================
+# Opens ChatGPT in Chrome
+$OpenChatGPT.Add_Click({
+    try {
+        Start-Process $ChromePath "--profile-directory=`"Default`" $ChatGPTUrl"
+    }
+    catch {
+        [System.Windows.MessageBox]::Show("Cannot Open ChatGPT: $($_.Exception.Message)", "LinkUp - Error", "OK", "Error")
+    }
+})
+
+# =======================
+# Button: Open Gemini
+# =======================
+# Opens Gemini in Chrome
+$OpenGemini.Add_Click({
+    try {
+        Start-Process $ChromePath "--profile-directory=`"Default`" $GeminiUrl"
+    }
+    catch {
+        [System.Windows.MessageBox]::Show("Cannot Open Gemini: $($_.Exception.Message)", "LinkUp - Error", "OK", "Error")
+    }
+})
+
+# =======================
 # Button: Exit
 # =======================
 # Closes the application window

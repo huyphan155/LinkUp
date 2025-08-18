@@ -139,6 +139,10 @@
                     Background="#1ABC9C"/>
             <Button x:Name="OpenVSCodeButton" Content="💾 VS Code"
                     Background="#007ACC"/>
+            <Button x:Name="OpenChatGPT" Content=" ChatGPT"
+                    Background="#24292E"/>
+            <Button x:Name="OpenGemini" Content=" Gemini"
+                    Background="#24292E"/>
             <Button x:Name="ExitButton" Content="❌ Exit"
                     Background="#E74C3C"/>
         </WrapPanel>
