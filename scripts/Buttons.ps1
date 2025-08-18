@@ -8,7 +8,7 @@
 $LaunchButton.Add_Click({
     $selected = $ConfigList.SelectedItem
     if (-not $selected) {
-        [System.Windows.MessageBox]::Show("Please select a config first.", "LinkUp - Lỗi", "OK", "Warning") 
+        Set-StatusMessage "Please select a config first." 3 "Warning"
         return
     }
 
@@ -41,13 +41,14 @@ $LaunchButton.Add_Click({
                     Add-Content $HistoryFile "[app] $target"
                 }
                 else {
-                    [System.Windows.MessageBox]::Show("App not found: $profile", "LinkUp - Lỗi", "OK", "Error")
+                    Set-StatusMessage "App not found: $profile" 5 "Error"
                 }
             }
         }
     }
 
     Add-Content $HistoryFile ""
+    Set-StatusMessage "All tabs & apps launched successfully!" 3 "Success"
 })
 
 
@@ -58,12 +59,14 @@ $LaunchButton.Add_Click({
 # Opens Pomofocus in Chrome (Default profile) and auto-starts timer after 5s
 $PomodoroButton.Add_Click({
     # Launch Pomofocus
+    Set-StatusMessage "Opening Pomodoro app..." 2 "Information"
     Start-Process $ChromePath "--profile-directory=`"Default`" https://pomofocus.io"
 
     # Wait for page to load, then simulate pressing Space to start timer
     Start-Sleep -Seconds 5
     Add-Type -AssemblyName System.Windows.Forms
     [System.Windows.Forms.SendKeys]::SendWait(" ")
+    Set-StatusMessage "Pomodoro timer started!" 3 "Success"
 })
 
 # =======================
@@ -71,6 +74,8 @@ $PomodoroButton.Add_Click({
 # =======================
 # Scans CSV files from a designated folder and converts them to a single text file
 $ScanTabsButton.Add_Click({
+    Set-StatusMessage "Scanning tabs in folder '$InputFolderPath'..." -1 "Information" # -1 means message won't disappear automatically
+    # Convert-TabCsvsToText now handles its own status messages inside the function
     Convert-TabCsvsToText -InputFolderPath $InputFolderPath -OutputTextFilePath $outputTextFilePath
 })
 
@@ -78,12 +83,29 @@ $ScanTabsButton.Add_Click({
 # Button: Open Calculator
 # =======================
 # Opens Calculator
-$OpenCalcButton.Add_Click({
+$OpenCalcButton.Add_Click({ # Using OpenCalcButton as per your UI.xaml and LinkUp.ps1
     try {
-        Start-Process "calc.exed"
+        Set-StatusMessage "Opening Calculator..." 2 "Information"
+        Start-Process "calc.exe"
+        Set-StatusMessage "Calculator opened!" 3 "Success"
     }
     catch {
-        [System.Windows.MessageBox]::Show("Cannot Open Calculator: $($_.Exception.Message)", "LinkUp - Error", "OK", "Error")
+        Set-StatusMessage "Cannot Open Calculator: $($_.Exception.Message)" 5 "Error"
+    }
+})
+
+# =======================
+# Button: Open ChatGPT
+# =======================
+# Opens ChatGPT in Chrome
+$OpenChatGPT.Add_Click({
+    try {
+        Set-StatusMessage "Opening ChatGPT..." 2 "Information"
+        Start-Process $ChromePath "--profile-directory=`"Default`" $ChatGPTUrl"
+        Set-StatusMessage "ChatGPT opened!" 3 "Success"
+    }
+    catch {
+        Set-StatusMessage "Cannot Open ChatGPT: $($_.Exception.Message)" 5 "Error"
     }
 })
 
