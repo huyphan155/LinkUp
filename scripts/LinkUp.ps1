@@ -21,6 +21,7 @@ $OpenVSCodeButton        = $window.FindName("OpenVSCodeButton")
 $OpenChatGPT             = $window.FindName("OpenChatGPT")
 $OpenGemini              = $window.FindName("OpenGemini")
 $ExitButton              = $window.FindName("ExitButton")
+$StatusLabel             = $window.FindName("StatusLabel")
 
 # =======================
 # Paths & Constants
@@ -34,7 +35,7 @@ $ConfigDir          = Join-Path $ParentDir "configs"
 $StreakFile         = Join-Path $HistoryDir "streak.txt"
 $HistoryFile        = Join-Path $HistoryDir "history.txt"
 $UsageFile          = Join-Path $HistoryDir "usage_count.txt"
-$inputFolderPath    = Join-Path $ParentDir "tabs_export" 
+$inputFolderPath    = Join-Path $ParentDir "tabs_export"
 $outputTextFilePath = Join-Path $ConfigDir "0.Current_work.txt"
 
 # =======================
@@ -56,6 +57,42 @@ $GeminiUrl          = "https://gemini.google.com/app"
 if (!(Test-Path $HistoryDir)) { New-Item -ItemType Directory -Path $HistoryDir | Out-Null }
 if (!(Test-Path $ConfigDir)) { New-Item -ItemType Directory -Path $ConfigDir | Out-Null }
 if (!(Test-Path $inputFolderPath)) { New-Item -ItemType Directory -Path $inputFolderPath | Out-Null }
+
+
+# =======================
+# Function to update status message
+# =======================
+function Set-StatusMessage {
+    param(
+        [string]$Message,
+        [int]$DurationSeconds = 3, # Message will disappear after this many seconds
+        [string]$MessageType = "Information" # Can be "Information", "Warning", "Error", "Success"
+    )
+
+    # Use $script:StatusLabel to access the global variable defined in LinkUp.ps1
+    # This is important when calling Set-StatusMessage from other scripts like Buttons.ps1 or Functions.ps1
+    if ($script:StatusLabel) {
+        $script:StatusLabel.Text = $Message
+        switch ($MessageType) {
+            "Information" { $script:StatusLabel.Foreground = "#2980B9" } # Blue
+            "Warning"     { $script:StatusLabel.Foreground = "#F39C12" } # Orange
+            "Error"       { $script:StatusLabel.Foreground = "#C0392B" } # Red
+            "Success"     { $script:StatusLabel.Foreground = "#27AE60" } # Green
+            default       { $script:StatusLabel.Foreground = "#2980B9" }
+        }
+
+        # Clear message after duration
+        if ($DurationSeconds -gt 0) {
+            # Use Start-Job to run the sleep and clear text in background
+            # so UI remains responsive.
+            Start-Job -ScriptBlock {
+                param($label, $duration)
+                Start-Sleep -Seconds $duration
+                $label.Dispatcher.Invoke([Action]{ $label.Text = "" })
+            } -ArgumentList $script:StatusLabel, $DurationSeconds | Out-Null
+        }
+    }
+}
 
 # Load functions & buttons
 . "$PSScriptRoot\Functions.ps1"

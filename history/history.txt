@@ -4,3 +4,7 @@
 [web] Notion arm-cortex-m3m4 Notes - https://www.notion.so/huyphann155/arm-cortex-m3m4-238f5b92155e8066a1ddd112e84b9f9f
 [web] Udemy arm-cortex Course - https://www.udemy.com/course/embedded-system-programming-on-arm-cortex-m3m4/learn/lecture/9079534#overview
 
+==== Mon 08/18/2025 22:07:36.70 - Open from configs\0.Current_work.txt ====
+[web] huyphan155/LinkUp: Get rid of opening all these files and apps every time I want to kick off study! - https://github.com/huyphan155/LinkUp
+[web] arm-cortex-m3m4 - https://www.notion.so/huyphann155/arm-cortex-m3m4-238f5b92155e8066a1ddd112e84b9f9f
+

@@ -8,7 +8,7 @@
 $LaunchButton.Add_Click({
     $selected = $ConfigList.SelectedItem
     if (-not $selected) {
-        [System.Windows.MessageBox]::Show("Please select a config first.", "LinkUp - Error", "OK", "Warning") 
+        Set-StatusMessage "Please select a config first." 3 "Warning"
         return
     }
 
@@ -41,13 +41,14 @@ $LaunchButton.Add_Click({
                     Add-Content $HistoryFile "[app] $target"
                 }
                 else {
-                    [System.Windows.MessageBox]::Show("App not found: $profile", "LinkUp - Error", "OK", "Error")
+                    Set-StatusMessage "App not found: $profile" 5 "Error"
                 }
             }
         }
     }
 
     Add-Content $HistoryFile ""
+    Set-StatusMessage "All tabs & apps launched successfully!" 3 "Success"
 })
 
 
@@ -58,12 +59,14 @@ $LaunchButton.Add_Click({
 # Opens Pomofocus in Chrome (Default profile) and auto-starts timer after 5s
 $PomodoroButton.Add_Click({
     # Launch Pomofocus
+    Set-StatusMessage "Opening Pomodoro app..." 2 "Information"
     Start-Process $ChromePath "--profile-directory=`"Default`" https://pomofocus.io"
 
     # Wait for page to load, then simulate pressing Space to start timer
     Start-Sleep -Seconds 5
     Add-Type -AssemblyName System.Windows.Forms
     [System.Windows.Forms.SendKeys]::SendWait(" ")
+    Set-StatusMessage "Pomodoro timer started!" 3 "Success"
 })
 
 # =======================
@@ -71,6 +74,8 @@ $PomodoroButton.Add_Click({
 # =======================
 # Scans CSV files from a designated folder and converts them to a single text file
 $ScanTabsButton.Add_Click({
+    Set-StatusMessage "Scanning tabs in folder '$InputFolderPath'..." -1 "Information" # -1 means message won't disappear automatically
+    # Convert-TabCsvsToText now handles its own status messages inside the function
     Convert-TabCsvsToText -InputFolderPath $InputFolderPath -OutputTextFilePath $outputTextFilePath
 })
 
@@ -78,25 +83,29 @@ $ScanTabsButton.Add_Click({
 # Button: Open Calculator
 # =======================
 # Opens Calculator
-$OpenCalcButton.Add_Click({
+$OpenCalcButton.Add_Click({ # Using OpenCalcButton as per your UI.xaml and LinkUp.ps1
     try {
+        Set-StatusMessage "Opening Calculator..." 2 "Information"
         Start-Process "calc.exe"
+        Set-StatusMessage "Calculator opened!" 3 "Success"
     }
     catch {
-        [System.Windows.MessageBox]::Show("Cannot Open Calculator: $($_.Exception.Message)", "LinkUp - Error", "OK", "Error")
+        Set-StatusMessage "Cannot Open Calculator: $($_.Exception.Message)" 5 "Error"
     }
 })
 
 # =======================
 # Button: Open GitHub
 # =======================
-# Opens a specific GitHub URL in Chrome
+# Opens a GitHub in Chrome
 $OpenGithubButton.Add_Click({
     try {
+        Set-StatusMessage "Opening GitHub..." 2 "Information"
         Start-Process $ChromePath "--profile-directory=`"Default`" $GithubUrl"
+        Set-StatusMessage "GitHub opened!" 3 "Success"
     }
     catch {
-        [System.Windows.MessageBox]::Show("Cannot Open GitHub: $($_.Exception.Message)", "LinkUp - Error", "OK", "Error")
+        Set-StatusMessage "Cannot Open GitHub: $($_.Exception.Message)" 5 "Error"
     }
 })
 
@@ -106,10 +115,12 @@ $OpenGithubButton.Add_Click({
 # Opens a specific Notion URL in Chrome
 $OpenNotionButton.Add_Click({
     try {
+        Set-StatusMessage "Opening Notion..." 2 "Information"
         Start-Process $ChromePath "--profile-directory=`"Profile 1`" $NotionUrl"
+        Set-StatusMessage "Notion opened!" 3 "Success"
     }
     catch {
-        [System.Windows.MessageBox]::Show("Cannot Open Notion: $($_.Exception.Message)", "LinkUp - Error", "OK", "Error")
+        Set-StatusMessage "Cannot Open Notion: $($_.Exception.Message)" 5 "Error"
     }
 })
 
@@ -119,10 +130,12 @@ $OpenNotionButton.Add_Click({
 # Opens STM32CubeIDE application
 $OpenSTM32CubeIDEButton.Add_Click({
     try {
+        Set-StatusMessage "Opening STM32CubeIDE..." 2 "Information"
         Start-Process $STM32CubeIDEPath
+        Set-StatusMessage "STM32CubeIDE opened!" 3 "Success"
     }
     catch {
-        [System.Windows.MessageBox]::Show("Cannot Open STM32CubeIDE. Vui lòng kiểm tra đường dẫn: $($STM32CubeIDEPath)`nLỗi: $($_.Exception.Message)", "LinkUp - Error", "OK", "Error")
+        Set-StatusMessage "Cannot Open STM32CubeIDE. Please check path: $($STM32CubeIDEPath)`nError: $($_.Exception.Message)" 5 "Error"
     }
 })
 
@@ -132,10 +145,12 @@ $OpenSTM32CubeIDEButton.Add_Click({
 # Opens File Explorer to a specific folder
 $OpenFileExplorerButton.Add_Click({
     try {
+        Set-StatusMessage "Opening File Explorer..." 2 "Information"
         Start-Process $FileExplorerPath
+        Set-StatusMessage "File Explorer opened to: $($FileExplorerPath)!" 3 "Success"
     }
     catch {
-        [System.Windows.MessageBox]::Show("Cannot Open File Explorer đến thư mục: $($FileExplorerPath)`nLỗi: $($_.Exception.Message)", "LinkUp - Error", "OK", "Error")
+        Set-StatusMessage "Cannot Open File Explorer to: $($FileExplorerPath)`nError: $($_.Exception.Message)" 5 "Error"
     }
 })
 
@@ -145,10 +160,12 @@ $OpenFileExplorerButton.Add_Click({
 # Opens Beyond Compare application
 $OpenBeyondCompareButton.Add_Click({
     try {
+        Set-StatusMessage "Opening Beyond Compare..." 2 "Information"
         Start-Process $BeyondComparePath
+        Set-StatusMessage "Beyond Compare opened!" 3 "Success"
     }
     catch {
-        [System.Windows.MessageBox]::Show("Cannot Open Beyond Compare. Vui lòng kiểm tra đường dẫn: $($BeyondComparePath)`nLỗi: $($_.Exception.Message)", "LinkUp - Error", "OK", "Error")
+        Set-StatusMessage "Cannot Open Beyond Compare. Please check path: $($BeyondComparePath)`nError: $($_.Exception.Message)" 5 "Error"
     }
 })
 
@@ -158,10 +175,12 @@ $OpenBeyondCompareButton.Add_Click({
 # Opens Visual Studio Code application
 $OpenVSCodeButton.Add_Click({
     try {
+        Set-StatusMessage "Opening Visual Studio Code..." 2 "Information"
         Start-Process $VSCodePath
+        Set-StatusMessage "Visual Studio Code opened!" 3 "Success"
     }
     catch {
-        [System.Windows.MessageBox]::Show("Cannot Open Visual Studio Code. Vui lòng kiểm tra đường dẫn: $($VSCodePath)`nLỗi: $($_.Exception.Message)", "LinkUp - Error", "OK", "Error")
+        Set-StatusMessage "Cannot Open Visual Studio Code. Please check path: $($VSCodePath)`nError: $($_.Exception.Message)" 5 "Error"
     }
 })
 
@@ -171,10 +190,12 @@ $OpenVSCodeButton.Add_Click({
 # Opens ChatGPT in Chrome
 $OpenChatGPT.Add_Click({
     try {
+        Set-StatusMessage "Opening ChatGPT..." 2 "Information"
         Start-Process $ChromePath "--profile-directory=`"Default`" $ChatGPTUrl"
+        Set-StatusMessage "ChatGPT opened!" 3 "Success"
     }
     catch {
-        [System.Windows.MessageBox]::Show("Cannot Open ChatGPT: $($_.Exception.Message)", "LinkUp - Error", "OK", "Error")
+        Set-StatusMessage "Cannot Open ChatGPT: $($_.Exception.Message)" 5 "Error"
     }
 })
 
@@ -184,10 +205,12 @@ $OpenChatGPT.Add_Click({
 # Opens Gemini in Chrome
 $OpenGemini.Add_Click({
     try {
+        Set-StatusMessage "Opening Gemini..." 2 "Information"
         Start-Process $ChromePath "--profile-directory=`"Default`" $GeminiUrl"
+        Set-StatusMessage "Gemini opened!" 3 "Success"
     }
     catch {
-        [System.Windows.MessageBox]::Show("Cannot Open Gemini: $($_.Exception.Message)", "LinkUp - Error", "OK", "Error")
+        Set-StatusMessage "Cannot Open Gemini: $($_.Exception.Message)" 5 "Error"
     }
 })
 

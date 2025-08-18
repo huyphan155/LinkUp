@@ -83,27 +83,25 @@ function Convert-TabCsvsToText {
     # Array to store all formatted lines from all CSV files
     $formattedLines = @()
 
-    # Show a message indicating the start of the scan
-    [System.Windows.MessageBox]::Show("Starting CSV file scan in folder: $InputFolderPath", "LinkUp - Tab Scan", "OK", "Information")
+    Set-StatusMessage "Starting CSV file scan in folder: $InputFolderPath" -1 "Information"
 
     # Get all CSV files in the specified folder
     try {
         $csvFiles = Get-ChildItem -Path $InputFolderPath -Filter "*.csv" -File
     }
     catch {
-        [System.Windows.MessageBox]::Show("Cannot access folder: $($_.Exception.Message). Please check the folder path and permissions.", "LinkUp - Scan Error", "OK", "Error")
+        Set-StatusMessage "Cannot access folder: $($_.Exception.Message). Please check the folder path and permissions." 5 "Error"
         return
     }
 
-    # Check if any CSV files were found
     if ($csvFiles.Count -eq 0) {
-        [System.Windows.MessageBox]::Show("No CSV files found in folder: $InputFolderPath", "LinkUp - Tab Scan", "OK", "Warning")
+        Set-StatusMessage "No CSV files found in folder: $InputFolderPath" 3 "Warning"
         return
     }
 
     # Loop through each found CSV file
     foreach ($csvFile in $csvFiles) {
-        [System.Windows.MessageBox]::Show("Processing file: $($csvFile.Name)", "LinkUp - Tab Scan", "OK", "Information")
+        Set-StatusMessage "Processing file: $($csvFile.Name)" -1 "Information" # Message stays until next one
         try {
             # Read the content of the CSV file
             # Ensure "Domain", "URL", "Title", and "Profile Name" columns are read correctly
@@ -132,17 +130,17 @@ function Convert-TabCsvsToText {
             }
         }
         catch {
-            [System.Windows.MessageBox]::Show("Error processing file $($csvFile.Name): $($_.Exception.Message)", "LinkUp - Scan Error", "OK", "Error")
+            Set-StatusMessage "Error processing file $($csvFile.Name): $($_.Exception.Message)" 5 "Error"
         }
     }
 
     # Write all formatted lines to the single output text file
-    # Using utf8 encoding for better Vietnamese character display
+    # Changed encoding to Unicode for potentially better Vietnamese character display
     try {
-        $formattedLines | Out-File -FilePath $OutputTextFilePath -Encoding utf8
-        [System.Windows.MessageBox]::Show("Conversion complete! All data has been consolidated and saved to file: $OutputTextFilePath`nFile has been encoded with UTF-8 for proper Vietnamese display.", "LinkUp - Tab Scan Complete", "OK", "Information")
+        $formattedLines | Out-File -FilePath $OutputTextFilePath -Encoding Unicode
+        Set-StatusMessage "Conversion complete! All data saved to: $OutputTextFilePath" 5 "Success"
     }
     catch {
-        [System.Windows.MessageBox]::Show("Cannot write to output text file: $($_.Exception.Message). Please check the file path and permissions.", "LinkUp - File Write Error", "OK", "Error")
+        Set-StatusMessage "Cannot write to output text file: $($_.Exception.Message). Check file path and permissions." 5 "Error"
     }
 }
