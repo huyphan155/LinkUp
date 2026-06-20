@@ -1,0 +1,52 @@
+{
+    "workspaces": [
+        {
+            "id": "2d40f43d-2d2c-4ef2-beb4-5df13c7cf44d",
+            "name": "Embedded Work",
+            "description": "Daily embedded development",
+            "icon": "💻",
+            "favorite": true,
+            "browser_sessions": [
+                {
+                    "browser": "chrome",
+                    "profile": "Default",
+                    "tabs": [
+                        {
+                            "title": "ChatGPT",
+                            "url": "https://chatgpt.com",
+                            "group": "AI",
+                            "enabled": true
+                        },
+                        {
+                            "title": "GitHub",
+                            "url": "https://github.com",
+                            "group": "Development",
+                            "enabled": true
+                        }
+                    ]
+                }
+            ],
+            "applications": [
+                {
+                    "name": "VS Code",
+                    "path": "C:\\Program Files\\Microsoft VS Code\\Code.exe",
+                    "arguments": [
+                        "D:\\Projects\\IPC"
+                    ],
+                    "enabled": true,
+                    "delay": 2
+                },
+                {
+                    "name": "Windows Terminal",
+                    "path": "wt.exe",
+                    "arguments": [
+                        "-d",
+                        "D:\\Projects\\IPC"
+                    ],
+                    "enabled": true,
+                    "delay": 0
+                }
+            ]
+        }
+    ]
+}
