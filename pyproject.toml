@@ -1,0 +1,11 @@
+[project]
+linkup = "linkup.main:main"
+name = "linkup"
+version = "3.0.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "customtkinter>=5.2.2",
+    "pydantic>=2.13.4",
+]
