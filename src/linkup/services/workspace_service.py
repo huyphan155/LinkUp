@@ -2,7 +2,6 @@ from pathlib import Path
 import json
 
 from models.workspace import Workspace
-from models.base_item import BaseItem
 from models.executable_item import ExecutableItem
 from models.url_item import UrlItem
 
@@ -32,6 +31,8 @@ class WorkspaceService:
                         arguments=item.get("arguments", [])
                     )
                     items.append(executable_item)
+                else:
+                    raise ValueError(f"Unknown item type: {item['type']}")
 
         return Workspace(
             name=data["name"],

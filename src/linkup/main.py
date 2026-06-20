@@ -1,4 +1,5 @@
 from services.workspace_service import WorkspaceService
+from launchers.launcher_service import LauncherService
 from pathlib import Path
 
 
@@ -7,7 +8,7 @@ def main():
     workspace = WorkspaceService.load(
         Path("D:/GitWork/LinkUp/config/workspace.json")
     )
-    # LauncherService.launch(workspace)
+    LauncherService.launch(workspace)
     print(workspace)
 
 

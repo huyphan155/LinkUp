@@ -15,7 +15,7 @@
         {
             "type": "executable",
             "name": "VS Code",
-            "path": "C:\\Program Files\\Microsoft VS Code\\Code.exe",
+            "path": "C:\\Users\\Admin\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe",
             "arguments": []
         }
     ]
