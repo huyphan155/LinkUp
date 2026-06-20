@@ -9,3 +9,29 @@ Check : uv --version
 5.  package install 
 uv add customtkinter
 uv add pydantic
+
+
+# LinkUp
+
+Workspace Automation Tool
+
+## Features
+
+- Workspace
+- URL Launcher
+- Executable Launcher
+
+## Tech Stack
+
+- Python
+- CustomTkinter
+- SQLite
+- Pydantic
+
+## Installation
+
+```bash
+uv sync
+
+```RUN
+uv run linkup

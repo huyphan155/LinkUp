@@ -1,9 +1,7 @@
-id
+from dataclasses import dataclass
 
-name
-
-type
-
-enabled
-
-delay
+@dataclass
+class BaseItem:
+    name: str
+    enabled: bool = True
+    delay: int = 0
