@@ -1,5 +1,5 @@
 from services.workspace_service import WorkspaceService
-from launchers.launcher_service import LauncherService
+from services.launcher_service import LauncherService
 from pathlib import Path
 
 
