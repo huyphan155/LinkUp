@@ -11,6 +11,61 @@ uv add customtkinter
 uv add pydantic
 
 
+            main.py
+            ↓
+            WorkspaceService.load()
+            ↓
+            Workspace object
+            ↓
+            LauncherService.launch(workspace)
+            ↓
+            for item in workspace.items
+            ↓
+            nếu là UrlItem
+            ↓
+            webbrowser.open()
+            ↓
+            nếu là ExecutableItem
+            ↓
+            subprocess.Popen()
+
+
+                    workspace.json
+                           │
+                           ▼
+                WorkspaceService
+                           │
+                           ▼
+                   Workspace Object
+                           │
+                           ▼
+                  LauncherService
+                           │
+          ┌────────────────┴────────────────┐
+          ▼                                 ▼
+      UrlItem                         ExecutableItem
+          ▼                                 ▼
+  webbrowser.open()              subprocess.Popen()
+
+
+src/
+└── linkup/
+    ├── main.py                            : launch service from workspace
+    │
+    ├── models/
+    │   ├── workspace.py                   : show data of a workspace
+    │   ├── base_item.py                   : show data of a item
+    │   ├── url_item.py                    : show data of a item + URL
+    │   └── executable_item.py             : show data of a item + Arguments
+    │
+    ├── services/
+    │   ├── workspace_service.py           : workspace.json -> object -> workspace
+    │   └── launcher_service.py            : receive object -> workspace -> open web / open app
+    │
+    ├── ui/
+    │
+    └── utils/
+
 # LinkUp
 
 Workspace Automation Tool
