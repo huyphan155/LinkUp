@@ -1,0 +1,13 @@
+{
+    "name": "Default",
+    "description": "",
+    "items": [
+        {
+            "type": "url",
+            "name": "Nâng cấp project WPF",
+            "enabled": true,
+            "url": "https://chatgpt.com/c/6a365ff7-364c-83ec-b851-1fd9929e690a",
+            "profile": "Default"
+        }
+    ]
+}

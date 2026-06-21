@@ -18,15 +18,14 @@ class WorkspaceService:
                     url_item = UrlItem(
                         name=item["name"],
                         enabled=item.get("enabled", True),
-                        delay=item.get("delay", 0),
-                        url=item["url"]
+                        url=item["url"],
+                        profile=item.get("profile", "Default")
                     )
                     items.append(url_item)
                 elif item["type"] == "executable":
                     executable_item = ExecutableItem(
                         name=item["name"],
                         enabled=item.get("enabled", True),
-                        delay=item.get("delay", 0),
                         path=item["path"],
                         arguments=item.get("arguments", [])
                     )
