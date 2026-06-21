@@ -13,19 +13,23 @@ def main():
     # LauncherService.launch(workspace)
     # print(workspace)
 
-    abc = ApplicationCapture.capture()
+    # abc = ApplicationCapture.capture()
+    #
+    # with open("terminal_output.txt", "w", encoding="utf-8") as log_file:
+    #     # Lưu lại stdout gốc
+    #     original_stdout = sys.stdout
+    #     # Đổi hướng stdout sang file
+    #     sys.stdout = log_file
+    #
+    #     print(abc)
+    #
+    #     # Trả lại stdout ban đầu sau khi kết thúc khối lệnh block "with"
+    #     sys.stdout = original_stdout
 
-    with open("terminal_output.txt", "w", encoding="utf-8") as log_file:
-        # Lưu lại stdout gốc
-        original_stdout = sys.stdout
-        # Đổi hướng stdout sang file
-        sys.stdout = log_file
 
-        print(abc)
-
-        # Trả lại stdout ban đầu sau khi kết thúc khối lệnh block "with"
-        sys.stdout = original_stdout
-
+    ApplicationCapture.export(
+        Path("D:/GitWork/LinkUp/config/current_app.json")
+    )
 
 
 if __name__ == "__main__":

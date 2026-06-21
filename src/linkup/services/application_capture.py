@@ -1,6 +1,9 @@
 import win32gui
 import win32process
 import psutil
+from pathlib import Path
+import json
+from dataclasses import asdict
 
 from models.executable_item import ExecutableItem
 
@@ -86,6 +89,39 @@ class ApplicationCapture:
             unique_apps.append(app)
 
         return unique_apps
+
+    @staticmethod
+    def export(output_path: Path | None = None):
+        """
+        Capture all running applications and export to LinkUp workspace JSON.
+        """
+        if output_path is None:
+            output_path = Path("D:/GitWork/LinkUp/config/current_app.json")
+
+        applications = ApplicationCapture.capture()
+
+        workspace = {
+            "name": output_path.stem,
+            "description": "",
+            "items": []
+        }
+
+        for app in applications:
+            workspace["items"].append({
+                "type": "executable",
+                "name": app.name,
+                "enabled": app.enabled,
+                "path": app.path,
+                "arguments": app.arguments
+            })
+
+        with open(output_path, "w", encoding="utf-8") as file:
+            json.dump(
+                workspace,
+                file,
+                indent=4,
+                ensure_ascii=False
+            )
 
 
 

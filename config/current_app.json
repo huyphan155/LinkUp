@@ -1,0 +1,34 @@
+{
+    "name": "current_app",
+    "description": "",
+    "items": [
+        {
+            "type": "executable",
+            "name": "LinkUp – main.py Administrator",
+            "enabled": true,
+            "path": "C:\\Program Files\\JetBrains\\PyCharm 2026.1.2\\bin\\pycharm64.exe",
+            "arguments": []
+        },
+        {
+            "type": "executable",
+            "name": "*new 1 - Notepad++ [Administrator]",
+            "enabled": true,
+            "path": "C:\\Program Files\\Notepad++\\notepad++.exe",
+            "arguments": []
+        },
+        {
+            "type": "executable",
+            "name": "D:\\GitWork\\LinkUp - Working Tree - TortoiseGit",
+            "enabled": true,
+            "path": "C:\\Program Files\\TortoiseGit\\bin\\TortoiseGitProc.exe",
+            "arguments": []
+        },
+        {
+            "type": "executable",
+            "name": "LinkUp [ release/LinkUp-version-3 ↓0 ↑1 ⁞4 ]",
+            "enabled": true,
+            "path": "C:\\Windows\\explorer.exe",
+            "arguments": []
+        }
+    ]
+}
