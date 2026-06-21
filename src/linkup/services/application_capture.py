@@ -5,9 +5,24 @@ import psutil
 from models.executable_item import ExecutableItem
 
 class ApplicationCapture:
+    """
+    Capture all visible desktop applications.
+    """
+
+    IGNORED_EXECUTABLES = {
+        "chrome.exe",              # Captured by Chrome Extension
+        "applicationframehost.exe",
+        "runtimebroker.exe",
+        "searchhost.exe",
+        "shellexperiencehost.exe",
+        "textinputhost.exe",
+        "taskmgr.exe",
+        # Ignore LinkUp itself
+        "linkup.exe",
+    }
 
     @staticmethod
-    # internal function for opening window check : HWMD -> ExecutableItem
+    # Convert HWND to ExecutableItem
     def _create_executable_item(hwnd):
 
         if win32gui.IsWindow(hwnd):
@@ -17,15 +32,19 @@ class ApplicationCapture:
 
             # from pid, take the infor about file .exe
             try:
-                proc = psutil.Process(pid)
-                exe_name = proc.name()
-                exe_path = proc.exe()
+                process  = psutil.Process(pid)
+                exe_name = process .name()
+                exe_path = process .exe()
             except Exception:
                 exe_name = "Unknown"
                 exe_path = "Unknown"
+                return None
+
+            if exe_name.lower() in ApplicationCapture.IGNORED_EXECUTABLES:
+                return None
 
             return ExecutableItem(
-                name=exe_name,
+                name=win32gui.GetWindowText(hwnd).strip(),
                 enabled=True,
                 path=exe_path,
                 arguments=[]
@@ -35,8 +54,8 @@ class ApplicationCapture:
             return None
 
     @staticmethod
-    # internal callback for open window check
-    def enum_window_callback(hwnd, result_list):
+    # Internal callback used by EnumWindows()
+    def _enum_window_callback(hwnd, result_list):
         title = win32gui.GetWindowText(hwnd)
         # only record visible window, skip underground task
         if title.strip() and win32gui.IsWindowVisible(hwnd):
@@ -50,9 +69,23 @@ class ApplicationCapture:
     def capture() -> list[ExecutableItem]:
 
         result_list = []
-        win32gui.EnumWindows(ApplicationCapture.enum_window_callback, result_list)
+        win32gui.EnumWindows(ApplicationCapture._enum_window_callback, result_list)
 
-        return result_list
+        # Remove duplicated executable path
+        unique_apps = []
+        seen_paths = set()
+
+        for app in result_list:
+
+            path = app.path.lower()
+
+            if path in seen_paths:
+                continue
+
+            seen_paths.add(path)
+            unique_apps.append(app)
+
+        return unique_apps
 
 
 
