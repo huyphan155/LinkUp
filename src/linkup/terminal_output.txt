@@ -1,0 +1,9 @@
+[ExecutableItem(name='pycharm64.exe', enabled=True, path='C:\\Program Files\\JetBrains\\PyCharm 2026.1.2\\bin\\pycharm64.exe', arguments=[]),
+ExecutableItem(name='chrome.exe', enabled=True, path='C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe', arguments=[]),
+ExecutableItem(name='TextInputHost.exe', enabled=True, path='C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\TextInputHost.exe', arguments=[]),
+ExecutableItem(name='chrome.exe', enabled=True, path='C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe', arguments=[]),
+ExecutableItem(name='Code.exe', enabled=True, path='C:\\Users\\Admin\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe', arguments=[]),
+ExecutableItem(name='explorer.exe', enabled=True, path='C:\\Windows\\explorer.exe', arguments=[]),
+ExecutableItem(name='explorer.exe', enabled=True, path='C:\\Windows\\explorer.exe', arguments=[]),
+ExecutableItem(name='chrome.exe', enabled=True, path='C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe', arguments=[]),
+ExecutableItem(name='explorer.exe', enabled=True, path='C:\\Windows\\explorer.exe', arguments=[])]

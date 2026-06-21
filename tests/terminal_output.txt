@@ -1,0 +1,46 @@
+--- DANH SÁCH CÁC CỬA SỔ ĐANG MỞ ---
+--- THÔNG TIN CỬA SỔ HWND: 263140 ---
+Ứng dụng (.exe): pycharm64.exe
+Mã định danh Process (PID): 8836
+Đường dẫn file: C:\Program Files\JetBrains\PyCharm 2026.1.2\bin\pycharm64.exe
+
+--- THÔNG TIN CỬA SỔ HWND: 984606 ---
+Ứng dụng (.exe): explorer.exe
+Mã định danh Process (PID): 7760
+Đường dẫn file: C:\Windows\explorer.exe
+
+--- THÔNG TIN CỬA SỔ HWND: 2295038 ---
+Ứng dụng (.exe): explorer.exe
+Mã định danh Process (PID): 7760
+Đường dẫn file: C:\Windows\explorer.exe
+
+--- THÔNG TIN CỬA SỔ HWND: 2622850 ---
+Ứng dụng (.exe): chrome.exe
+Mã định danh Process (PID): 10076
+Đường dẫn file: C:\Program Files\Google\Chrome\Application\chrome.exe
+
+--- THÔNG TIN CỬA SỔ HWND: 196810 ---
+Ứng dụng (.exe): chrome.exe
+Mã định danh Process (PID): 10076
+Đường dẫn file: C:\Program Files\Google\Chrome\Application\chrome.exe
+
+--- THÔNG TIN CỬA SỔ HWND: 66226 ---
+Ứng dụng (.exe): TextInputHost.exe
+Mã định danh Process (PID): 11120
+Đường dẫn file: C:\Windows\SystemApps\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\TextInputHost.exe
+
+--- THÔNG TIN CỬA SỔ HWND: 328742 ---
+Ứng dụng (.exe): chrome.exe
+Mã định danh Process (PID): 10076
+Đường dẫn file: C:\Program Files\Google\Chrome\Application\chrome.exe
+
+--- THÔNG TIN CỬA SỔ HWND: 198094 ---
+Ứng dụng (.exe): Code.exe
+Mã định danh Process (PID): 12676
+Đường dẫn file: C:\Users\Admin\AppData\Local\Programs\Microsoft VS Code\Code.exe
+
+--- THÔNG TIN CỬA SỔ HWND: 65872 ---
+Ứng dụng (.exe): explorer.exe
+Mã định danh Process (PID): 7760
+Đường dẫn file: C:\Windows\explorer.exe
+
