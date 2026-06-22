@@ -1,5 +1,4 @@
 from models.workspace import Workspace
-import webbrowser
 import subprocess
 
 CHROME_PATH = r"C:\Program Files\Google\Chrome\Application\chrome.exe"

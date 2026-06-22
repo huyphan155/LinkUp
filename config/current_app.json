@@ -11,13 +11,6 @@
         },
         {
             "type": "executable",
-            "name": "*new 1 - Notepad++ [Administrator]",
-            "enabled": true,
-            "path": "C:\\Program Files\\Notepad++\\notepad++.exe",
-            "arguments": []
-        },
-        {
-            "type": "executable",
             "name": "D:\\GitWork\\LinkUp - Working Tree - TortoiseGit",
             "enabled": true,
             "path": "C:\\Program Files\\TortoiseGit\\bin\\TortoiseGitProc.exe",
@@ -25,7 +18,7 @@
         },
         {
             "type": "executable",
-            "name": "LinkUp [ release/LinkUp-version-3 ↓0 ↑1 ⁞4 ]",
+            "name": "LinkUp [ release/LinkUp-version-3 ↓0 ↑0 ⁞4 ]",
             "enabled": true,
             "path": "C:\\Windows\\explorer.exe",
             "arguments": []

@@ -3,6 +3,7 @@ from services.launcher_service import LauncherService
 from pathlib import Path
 
 from services.application_capture import ApplicationCapture
+from services.ConfigProfile_Service import ConfigProfileService
 import sys
 
 def main():
@@ -27,9 +28,17 @@ def main():
     #     sys.stdout = original_stdout
 
 
-    ApplicationCapture.export(
-        Path("D:/GitWork/LinkUp/config/current_app.json")
-    )
+    # ApplicationCapture.export(
+    #     Path("D:/GitWork/LinkUp/config/current_app.json")
+    # )
+
+    profiles = ConfigProfileService.scan()
+
+    for profile in profiles:
+        print(profile.name)
+
+
+
 
 
 if __name__ == "__main__":
