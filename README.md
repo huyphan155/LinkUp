@@ -90,3 +90,24 @@ uv sync
 
 ```RUN
 uv run linkup
+
+UI
+    ↓
+MainWindow
+
+↓
+
+Services
+    ↓
+ConfigProfileService
+WorkspaceService
+LauncherService
+ApplicationCapture
+
+↓
+
+Models
+    ↓
+Workspace
+UrlItem
+ExecutableItem

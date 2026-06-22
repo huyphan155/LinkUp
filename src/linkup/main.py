@@ -6,6 +6,11 @@ from services.application_capture import ApplicationCapture
 from services.ConfigProfile_Service import ConfigProfileService
 import sys
 
+import sys
+
+from PySide6.QtWidgets import QApplication
+from ui.main_window import MainWindow
+
 def main():
     print("Hello from linkup!")
     # workspace = WorkspaceService.load(
@@ -32,12 +37,17 @@ def main():
     #     Path("D:/GitWork/LinkUp/config/current_app.json")
     # )
 
-    profiles = ConfigProfileService.scan()
+    # profiles = ConfigProfileService.scan()
+    #
+    # for profile in profiles:
+    #     print(profile.name)
 
-    for profile in profiles:
-        print(profile.name)
+    app = QApplication(sys.argv)
 
+    window = MainWindow()
+    window.show()
 
+    sys.exit(app.exec())
 
 
 
