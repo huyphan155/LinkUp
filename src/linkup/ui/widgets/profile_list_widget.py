@@ -5,6 +5,7 @@ from PyQt6.QtWidgets import (
     QCheckBox,
 )
 
+from services.ConfigProfile_Service import ConfigProfileService
 
 class ProfileListWidget(QWidget):
 
@@ -12,26 +13,67 @@ class ProfileListWidget(QWidget):
         super().__init__()
 
         # Main layout
-        main_layout = QVBoxLayout()
+        self.main_layout = QVBoxLayout()
+        # check boxs is empty
+        self.checkboxes = []
 
         # Group box
-        group_box = QGroupBox("Config Profiles")
-
+        # +---------------------------+
+        # | Config Profiles           |
+        # |                           |
+        # |                           |
+        # +---------------------------+
+        self.group_box = QGroupBox("Config Profiles")
         # Layout inside group box
-        group_layout = QVBoxLayout()
+        self.group_layout = QVBoxLayout()
+        self.group_box.setLayout(self.group_layout)
 
-        profiles = [
-            "Default",
-            "Profile1",
-            "current_app",
-        ]
+        # Main layout
+        self.main_layout.addWidget(self.group_box)
+        self.setLayout(self.main_layout)
+        # QWidget
+        # │
+        # └── main_layout
+        #     │
+        #     └── group_box
+        #         │
+        #         └── group_layout
 
+        # Load profiles when widget is created
+        self._load_profiles()
+
+    def _load_profiles(self):
+        """
+        Load all config profiles and display them as checkboxes.
+        """
+        # Get all config files
+        profiles = ConfigProfileService.scan()
+
+        # Remove old checkboxes (for future refresh)
+        while self.group_layout.count():
+            item = self.group_layout.takeAt(0)
+            if item.widget():
+                item.widget().deleteLater()
+
+        self.checkboxes.clear()
+
+        # Create checkboxes
         for profile in profiles:
-            checkbox = QCheckBox(profile)
-            group_layout.addWidget(checkbox)
+            # stem explain : Path("Default.json").stem -> Default
+            checkbox = QCheckBox(profile.stem)
+            self.checkboxes.append(checkbox)
+            self.group_layout.addWidget(checkbox)
 
-        group_box.setLayout(group_layout)
+    def selected_profiles(self) -> list[str]:
+        """
+        Return all selected profile names.
+        """
 
-        main_layout.addWidget(group_box)
+        selected = []
 
-        self.setLayout(main_layout)
+        for checkbox in self.checkboxes:
+
+            if checkbox.isChecked():
+                selected.append(checkbox.text())
+
+        return selected
