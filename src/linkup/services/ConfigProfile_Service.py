@@ -1,27 +1,25 @@
 from pathlib import Path
+from utils.path_connect import CONFIG_DIR
 
 class ConfigProfileService:
     """
     Manage all LinkUp config profiles (.json).
     """
 
-    PROJECT_ROOT = Path(__file__).resolve().parents[3]
-    CONFIG_FOLDER = PROJECT_ROOT / "config"
-
     @staticmethod
     def scan() -> list[Path]:
         """
         Scan config folder and return all workspace profiles.
         """
-        if not ConfigProfileService.CONFIG_FOLDER.exists():
+        if not CONFIG_DIR.exists():
             return []
 
-        if not ConfigProfileService.CONFIG_FOLDER.is_dir():
+        if not CONFIG_DIR.is_dir():
             return []
 
         # .glob("*.json") find only .json in (no recursive)
         # sorted() : a -> Z
-        config_files = sorted(ConfigProfileService.CONFIG_FOLDER.glob("*.json"))
+        config_files = sorted(CONFIG_DIR.glob("*.json"))
 
         return config_files
 
@@ -30,10 +28,7 @@ class ConfigProfileService:
         """
         Check whether a config profile exists.
         """
-        profile_path = (
-                ConfigProfileService.CONFIG_FOLDER /
-                f"{profile_name}.json"
-        )
+        profile_path = (CONFIG_DIR /f"{profile_name}.json")
 
         return profile_path.exists()
 
@@ -42,10 +37,7 @@ class ConfigProfileService:
         """
         Return config profile path.
         """
-        profile_path = (
-                ConfigProfileService.CONFIG_FOLDER /
-                f"{profile_name}.json"
-        )
+        profile_path = (CONFIG_DIR /f"{profile_name}.json")
 
         if profile_path.exists():
             return profile_path
@@ -75,10 +67,7 @@ class ConfigProfileService:
         if old_path is None:
             return False
 
-        new_path = (
-                ConfigProfileService.CONFIG_FOLDER /
-                f"{new_name}.json"
-        )
+        new_path = (CONFIG_DIR /f"{new_name}.json")
 
         old_path.rename(new_path)
         return True

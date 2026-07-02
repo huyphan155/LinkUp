@@ -3,9 +3,9 @@ import win32process
 import psutil
 from pathlib import Path
 import json
-from dataclasses import asdict
 
 from models.executable_item import ExecutableItem
+from utils.path_connect import CONFIG_DIR
 
 class ApplicationCapture:
     """
@@ -96,7 +96,7 @@ class ApplicationCapture:
         Capture all running applications and export to LinkUp workspace JSON.
         """
         if output_path is None:
-            output_path = Path("D:/GitWork/LinkUp/config/current_app.json")
+            output_path = CONFIG_DIR /"current_app.json"
 
         applications = ApplicationCapture.capture()
 
