@@ -2,6 +2,7 @@ from PyQt6.QtWidgets import (
     QMainWindow,
     QWidget,
     QVBoxLayout,
+    QHBoxLayout
 )
 
 from PyQt6.QtWidgets import QPushButton
@@ -9,6 +10,7 @@ from PyQt6.QtWidgets import QStatusBar
 
 # user import
 from ui.widgets.profile_list_widget import ProfileListWidget
+from ui.widgets.workspace_preview_widget import WorkspacePreviewWidget
 from services.ConfigProfile_Service import ConfigProfileService
 from services.workspace_service import WorkspaceService
 from services.launcher_service import LauncherService
@@ -32,21 +34,26 @@ class MainWindow(QMainWindow):
 
         # Main layout
         main_layout = QVBoxLayout()
+        # Top layout
+        top_layout = QHBoxLayout()
 
         # Profile list
         self.profile_list = ProfileListWidget()
-        main_layout.addWidget(self.profile_list)
 
         # Launch button
         self.launch_button = QPushButton("Launch!")
         self.launch_button.clicked.connect(self._launch_button_clicked)
-        main_layout.addWidget(self.launch_button)
 
         # Capture Applications button
         self.capture_button = QPushButton("Capture Applications!")
         self.capture_button.clicked.connect(self._capture_button_clicked)
-        main_layout.addWidget(self.capture_button)
 
+        # preview widget
+        self.preview = WorkspacePreviewWidget()
+
+        # take signal from self.profile_list.profiles_changed
+        # and connect to slot "self._profiles_changed"
+        self.profile_list.profiles_changed.connect(self._profiles_changed)
 
         # Central Widget(QWidget)            # QWidget
         #     │
@@ -54,6 +61,14 @@ class MainWindow(QMainWindow):
         #            │
         #            └── self.profile_list   # widget of main_layout
         #            └── self.launch_button  # widget of main_layout
+        top_layout.addWidget(self.profile_list)
+        top_layout.addWidget(self.preview)
+
+        main_layout.addLayout(top_layout)
+
+        main_layout.addWidget(self.launch_button)
+        main_layout.addWidget(self.capture_button)
+
         central_widget = QWidget()
         central_widget.setLayout(main_layout)
         self.setCentralWidget(central_widget)
@@ -81,6 +96,28 @@ class MainWindow(QMainWindow):
         # application is capture and export to ./config/current_app.json
         ApplicationCapture.export()
         self._status_bar("Capture completed.",3000)
+
+    # work space preview slot
+    def _profiles_changed(self, profiles: list[str]):
+
+        # 0 profile select : clear
+        if len(profiles) == 0:
+            self.preview.clear()
+            return
+        # >2 profile : show message
+        if len(profiles) > 1:
+            self.preview.show_message("Select one profile to preview.")
+            return
+        # 1 profile : load -> preview
+        profile_name = profiles[0]
+        # get path of profile_name
+        path = ConfigProfileService.get(profile_name)
+        # load workspace from path
+        workspace = WorkspaceService.load(path)
+        # preview from workspace
+        self.preview.show_workspace(workspace)
+
+
 
 
 

@@ -5,10 +5,13 @@ from PyQt6.QtWidgets import (
     QCheckBox,
 )
 
+from PyQt6.QtCore import pyqtSignal
+
 from services.ConfigProfile_Service import ConfigProfileService
 
 class ProfileListWidget(QWidget):
 
+    profiles_changed = pyqtSignal(list)
     def __init__(self):
         super().__init__()
 
@@ -61,8 +64,11 @@ class ProfileListWidget(QWidget):
         for profile in profiles:
             # stem explain : Path("Default.json").stem -> Default
             checkbox = QCheckBox(profile.stem)
+            # connect to slot function "self._checkbox_changed"
+            checkbox.stateChanged.connect(self._checkbox_changed)
             self.checkboxes.append(checkbox)
             self.group_layout.addWidget(checkbox)
+
 
     def selected_profiles(self) -> list[str]:
         """
@@ -77,3 +83,9 @@ class ProfileListWidget(QWidget):
                 selected.append(checkbox.text())
 
         return selected
+
+    def _checkbox_changed(self):
+        """
+        broadcast signal of selected profiles.
+        """
+        self.profiles_changed.emit(self.selected_profiles())
