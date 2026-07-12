@@ -4,21 +4,28 @@
     "items": [
         {
             "type": "executable",
-            "name": "LinkUp – main.py Administrator",
+            "name": "LinkUp",
+            "enabled": true,
+            "path": "C:\\Users\\Admin\\AppData\\Roaming\\uv\\python\\cpython-3.14.5-windows-x86_64-none\\python.exe",
+            "arguments": []
+        },
+        {
+            "type": "executable",
+            "name": "LinkUp – main.py",
             "enabled": true,
             "path": "C:\\Program Files\\JetBrains\\PyCharm 2026.1.2\\bin\\pycharm64.exe",
             "arguments": []
         },
         {
             "type": "executable",
-            "name": "D:\\GitWork\\LinkUp - Working Tree - TortoiseGit",
+            "name": "Settings",
             "enabled": true,
-            "path": "C:\\Program Files\\TortoiseGit\\bin\\TortoiseGitProc.exe",
+            "path": "C:\\Windows\\ImmersiveControlPanel\\SystemSettings.exe",
             "arguments": []
         },
         {
             "type": "executable",
-            "name": "LinkUp [ release/LinkUp-version-3 ↓0 ↑0 ⁞4 ]",
+            "name": "Program Manager",
             "enabled": true,
             "path": "C:\\Windows\\explorer.exe",
             "arguments": []

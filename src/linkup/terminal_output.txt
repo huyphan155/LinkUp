@@ -1,4 +1,0 @@
-[ExecutableItem(name='LinkUp – main.py', enabled=True, path='C:\\Program Files\\JetBrains\\PyCharm 2026.1.2\\bin\\pycharm64.exe', arguments=[]),
-ExecutableItem(name='PyNote.txt - Python101 - Visual Studio Code [Administrator]', enabled=True, path='C:\\Users\\Admin\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe', arguments=[]),
-ExecutableItem(name='LinkUp [ release/LinkUp-version-3 ↓0 ↑1 ⁞4 ]', enabled=True, path='C:\\Windows\\explorer.exe', arguments=[]),
-ExecutableItem(name='New Text Compare* - Text Compare - Beyond Compare', enabled=True, path='C:\\Program Files\\Beyond Compare 4\\BCompare.exe', arguments=[])]
