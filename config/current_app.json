@@ -1,0 +1,34 @@
+{
+    "name": "current_app",
+    "description": "",
+    "items": [
+        {
+            "type": "executable",
+            "name": "LinkUp",
+            "enabled": true,
+            "path": "C:\\Users\\Admin\\AppData\\Roaming\\uv\\python\\cpython-3.14.5-windows-x86_64-none\\python.exe",
+            "arguments": []
+        },
+        {
+            "type": "executable",
+            "name": "LinkUp – main.py",
+            "enabled": true,
+            "path": "C:\\Program Files\\JetBrains\\PyCharm 2026.1.2\\bin\\pycharm64.exe",
+            "arguments": []
+        },
+        {
+            "type": "executable",
+            "name": "Settings",
+            "enabled": true,
+            "path": "C:\\Windows\\ImmersiveControlPanel\\SystemSettings.exe",
+            "arguments": []
+        },
+        {
+            "type": "executable",
+            "name": "Program Manager",
+            "enabled": true,
+            "path": "C:\\Windows\\explorer.exe",
+            "arguments": []
+        }
+    ]
+}

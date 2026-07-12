@@ -1,1 +1,22 @@
-/scripts/UserUI/Icon/temp
+# OS
+Thumbs.db
+.DS_Store
+
+# pycache by compiler
+__pycache__/
+.pytest_cache/
+*.pyc
+.mypy_cache/
+.ruff_cache/
+.idea/
+.vscode/
+
+#
+*.egg-info/
+.venv/
+dist/
+build/
+
+
+
+

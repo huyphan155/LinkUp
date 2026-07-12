@@ -1,0 +1,24 @@
+{
+    "name": "Embedded Work",
+    "description": "Daily workspace",
+    "items": [
+        {
+            "type": "url",
+            "name": "ChatGPT",
+            "url": "https://chatgpt.com",
+            "profile": "Default"
+        },
+        {
+            "type": "url",
+            "name": "GitHub",
+            "url": "https://github.com",
+            "profile": "Profile 1"
+        },
+        {
+            "type": "executable",
+            "name": "VS Code",
+            "path": "C:\\Users\\Admin\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe",
+            "arguments": []
+        }
+    ]
+}

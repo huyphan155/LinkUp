@@ -1,114 +1,218 @@
 # 🚀 LinkUp
 
-LinkUp is a simple tool that automatically opens Chrome tabs (with chosen profiles) and apps from a config file.
-It also keeps a history log of what you opened and when.
+> Restore your entire Windows workspace with one click.
 
-## ✨ Features
-✅ **Custom config** for different purposes (Study, Work, etc.)  
-✅ **Multiple Chrome profiles** (`Default`, `Profile 1`, etc.)  
-✅ **Logs session history** with time, profile, name, and URL  
-✅ **Tracks daily streaks**  
-✅ **Pomodoro timer integration**  
-✅ **Convert specific CSV files to config files (Instruction below)**
+Capture your Chrome tabs and running desktop applications, then relaunch everything instantly whenever you need.
 
-## 📂 Folder Structure
+**One click → Full working environment restored.**
+
+---
+
+## ✨Features
+
+### ✅ Workspace Launcher
+
+Launch multiple workspace profiles simultaneously.
+
+Supported items:
+
+- Chrome URLs
+- Windows desktop applications (.exe)
+
+---
+
+### ✅ Chrome Workspace Export
+
+A Chrome Extension exports all opened tabs into a LinkUp workspace file.
+
+Example:
+
+```text
+Default.json
+Profile1.json
+Work.json
 ```
-LinkUp\
+
+Each browser profile is exported independently.
+
+---
+
+### ✅ Application Capture (Capture all currently opened desktop applications)
+
+Automatically exports to:
+
+```text
+config/current_app.json
+```
+
+Supported Most Win32 desktop applications
+
+Ignored:
+
+- Chrome (captured by Extension)
+- System processes
+- Hidden background windows
+
+---
+
+### ✅ Workspace Preview 
+### ✅ Multiple Profile Launch
+
+
+## 📂 Project Structure
+
+```
+LinkUp/
 │
-├── LinkUp.vbs                            # VBScript launcher (run main Executed scripts\LinkUp.ps1)
-├── README.md                             # Read me
-├── configs\              
-│    ├── "config_name".txt
-│    └── ...
-├── history\
-│    ├── history.txt                      # Session history log
-│    ├── usage_count.txt                  # Usage URL count
-│    └── streak.txt                       # streak day(s) in a row
-├── scripts\
-│    ├── LinkUp.ps1                       # Main Executed
-│    ├── Functions.ps1                    # Functions
-│    ├── Buttons.ps1                      # Button event handlers
-│    └── UserUI\              
-│         ├── "UI".txt                    # WPF UI Layout
-│         ├── ...
-│         └── Icon\       
-│               ├── ShortCutCreate.vbs    # Generates desktop shortcut
-│               ├── "icon.ico"            # Icon for ShortCut
-│               └── ...
-├── scripts\
-│    ├── "Default".csv                    # CSV files input to convert into LinkUp configuration file.
-│    └── ...
-└── doc\                                  # Documentation and notes
+├── config/
+│   ├── Default.json
+│   ├── current_app.json
+│   └── ...
+│
+├── extension/
+│   └── Chrome Extension
+│
+├── src/
+│   └── linkup/
+│       ├── launchers/
+│       ├── models/
+│       ├── services/
+│       ├── ui/
+│       ├── utils/
+│       └── main.py
+│
+└── README.md
 ```
-## 🧑‍💻 Author
-Created by **huyphan155** - https://github.com/huyphan155
 
-Get rid of opening all these files and apps every time I want to kick off study!
+---
 
-## Setup
+## Workspace Format
 
-- You need to manually set your Chrome executable path in the `$ChromePath` variable inside `/scripts/Functions.ps1 `
+```json
+{
+    "name": "Default",
+    "description": "",
+    "items": [
+        {
+            "type": "url",
+            "name": "ChatGPT",
+            "enabled": true,
+            "url": "https://chatgpt.com",
+            "profile": "Default"
+        },
+        {
+            "type": "executable",
+            "name": "Visual Studio Code",
+            "enabled": true,
+            "path": "C:\\Program Files\\Microsoft VS Code\\Code.exe",
+            "arguments": []
+        }
+    ]
+}
+```
 
-  - By Default:  `$ChromePath  = "C:\Program Files\Google\Chrome\Application\chrome.exe"`
+---
 
-- You also can change the UI in `/scripts/LinkUp.ps1 `
-By Default is using  `UI.xaml`
+## Technologies
 
-## Convert specific CSV files to config files
-This feature allows you to export your open tabs from Chrome into CSV files and then convert them into a single, usable LinkUp configuration file
+- Python 3.13
+- PyQt6
+- pathlib
+- dataclasses
+- psutil
+- pywin32
+- Chrome Extension (Manifest V3)
 
-Install this extention at this link : `https://github.com/huyphan155/ChromeTabCSVExporter` to chrome (Developer mode). 
-Export your current tabs from Chrome to CSV file. 
-Save these exported CSV files into export CSV file to `/tabs_export`
+---
 
-- Run LinkUP and Use `Scan Tabs` feature on the application Interface.
+## Current Architecture
 
+```
+                MainWindow
+                     │
+     ┌───────────────┼───────────────┐
+     │               │               │
+     ▼               ▼               ▼
+ProfileList     WorkspacePreview   StatusBar
+     │
+     ▼
+ConfigProfileService
+     │
+     ▼
+WorkspaceService
+     │
+     ▼
+Workspace Object
+     │
+     ▼
+LauncherService
+```
 
-## Setup
+Business logic is separated from the UI.
 
-**You need to manually set your Chrome executable path in the `$ChromePath` variable inside `/scripts/Functions.ps1`**  
-   - By Default :  
-     ```powershell
-     $ChromePath = "C:\Program Files\Google\Chrome\Application\chrome.exe"
-     ```
+- UI only coordinates user actions.
+- Services contain business logic.
+- Models represent workspace data.
 
-**You can customize the UI by editing the `/script/LinkUp.ps1`**  
-   - By default, it loads the UI from: `UI.xaml`
+---
 
-**Run `scripts\UserUI\Icon\ShortCutCreate.vbs` to generate a LinkUp.lnk shortcut on your Desktop**  
-   - Replace the .ico in ShortCutCreate.vbs with your preferred icon.
+## How to Run
+
+Clone repository
+
+```bash
+git clone https://github.com/huyphan155/LinkUp.git
+```
+
+Install dependencies
+
+```bash
+uv sync
+```
+
+Run
+
+```bash
+uv run src/linkup/main.py
+```
+
+---
+
+## Roadmap
+
+### Completed
 
 ## 📅 Changelog
-- **v1.0.0** (2025-08-02)  
-  - Initial release with:
-    - Multiple Chrome profiles support
-    - Custom config for different purposes
-    - Session history logging
-- **v1.1.0** (2025-08-02)  
-  - Updated release with:
-    - automate scan user's config files
-    - URL usage count in  history\usage_count.txt
-- **v1.1.1** (2025-08-04)  
-  - Updated version with:
-    - SORT descending in usage count in history\usage_count.txt
-    - Pomodoro Mode ⏱️ option
-    - Update 🔥 Streak feature
-    - Countdown before launch
+- **v1.0.0** (2025-08-02)
+- **v1.1.0** (2025-08-02)
+- **v1.1.1** (2025-08-04)
 - **v2.0.0** (2025-08-09)
-  - Updated release with:
-    - Migrated from BAT script to PowerShell (.ps1) for improved flexibility and maintainability.
-    - Added modern WPF GUI (Windows Presentation Foundation)
-    - Re-Organize folder structure
-    - Customize UI
 - **v2.0.1** (2025-08-10)
-  - Updated release with:
-    - Add LinkUp shortcut and icon list
-    - Add ShortCutCreate.vbs script
 - **v2.1.0** (2025-08-16)
-  - Updated release with:
-    - Add Tab Scan Button.
-    - Add Caculator Button
-- **v2.1.1** (2025-08-18)
-  - Updated release with:
-    - Add chatGPT button
-    - Add TextBox status message
+- **v2.1.1** (2025-08-18) : Stable Release - V2.1.1 (PowerShell)
+
+
+- **v3.0.0** (2026-07-21) : Code drop1 - First Public Preview (Rewrie with Python + PyQT6)
+  - Initial release with:
+      - Workspace Model
+      - Workspace Loader
+      - Launcher Service
+      - Chrome Workspace Export
+      - Application Capture
+      - Workspace Preview
+      - Multi Profile Launch
+      - Status Bar
+      - PyQt6 Desktop UI
+
+
+### Planned
+- Rename/Delete workspace profiles
+- Pomodoro timer integration
+- workspace operation
+- log
+- Settings
+- Build executable (.exe)
+- Installer
+- Auto startup
+- Embedded Favorite application 
+---
