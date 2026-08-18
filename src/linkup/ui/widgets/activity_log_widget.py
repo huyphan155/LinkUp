@@ -23,15 +23,14 @@ class ActivityLogWidget(QWidget):
 
         self.setLayout(layout)
 
-    def log(self, message: str):
+    def log(self, *message: str):
         """
         Add a timestamped message to the activity log.
         """
         timestamp = datetime.now().strftime("%H:%M:%S")
 
-        self.log_widget.appendPlainText(
-            f"[{timestamp}] {message}"
-        )
+        for msg in message:
+            self.log_widget.appendPlainText(f"{timestamp}: {msg}")
 
     def clear(self):
         """
