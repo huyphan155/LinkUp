@@ -102,8 +102,6 @@ class MainWindow(QMainWindow):
             # Log activity with helper
             log_launch_results(self.activity_log, launch_result)
         self._status_bar("Launch completed.")
-        # Log activity
-        self.activity_log.log("Launch completed.")
 
     # capture button slot
     def _capture_button_clicked(self):
