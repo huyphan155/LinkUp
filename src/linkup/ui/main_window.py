@@ -7,6 +7,8 @@ from PyQt6.QtWidgets import (
 
 from PyQt6.QtWidgets import QPushButton
 from PyQt6.QtWidgets import QStatusBar
+# import helper
+from utils.helper import log_launch_results
 
 # user import
 from ui.widgets.profile_list_widget import ProfileListWidget
@@ -29,7 +31,7 @@ class MainWindow(QMainWindow):
         self.setStatusBar(self.status_bar)
         self.status_bar.showMessage("Ready")
         # self.resize(700, 500)
-        self.setFixedSize(400, 300)
+        self.setFixedSize(600, 500)
         self.setMinimumSize(200,300) # min
         self.setMaximumSize(800,800) # max
 
@@ -96,9 +98,9 @@ class MainWindow(QMainWindow):
             # load workspace from path
             workspace = WorkspaceService.load(path)
             # launch from workspace
-            LauncherService.launch(workspace)
-            # Log activity
-            self.activity_log.log(f"✔ {profile_name} launched.")
+            launch_result = LauncherService.launch(workspace)
+            # Log activity with helper
+            log_launch_results(self.activity_log, launch_result)
         self._status_bar("Launch completed.")
         # Log activity
         self.activity_log.log("Launch completed.")
