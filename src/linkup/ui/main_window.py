@@ -45,6 +45,8 @@ class MainWindow(QMainWindow):
 
         # Launch button
         self.launch_button = QPushButton("Launch!")
+        # Disable launch if no profile is selected
+        self.launch_button.setEnabled(False)
         self.launch_button.clicked.connect(self._launch_button_clicked)
 
         # Capture Applications button
@@ -118,6 +120,8 @@ class MainWindow(QMainWindow):
 
     # work space preview slot
     def _profiles_changed(self, profiles: list[str]):
+        # Enable Launch when at least one profile is selected
+        self.launch_button.setEnabled(bool(profiles))
 
         # 0 profile select : clear
         if len(profiles) == 0:
