@@ -2,11 +2,11 @@ from PyQt6.QtWidgets import (
     QMainWindow,
     QWidget,
     QVBoxLayout,
-    QHBoxLayout
+    QHBoxLayout,
+    QPushButton,
+    QStatusBar,
 )
 
-from PyQt6.QtWidgets import QPushButton
-from PyQt6.QtWidgets import QStatusBar
 # import helper
 from utils.helper import log_launch_results
 
@@ -14,6 +14,7 @@ from utils.helper import log_launch_results
 from ui.widgets.profile_list_widget import ProfileListWidget
 from ui.widgets.workspace_preview_widget import WorkspacePreviewWidget
 from ui.widgets.activity_log_widget import ActivityLogWidget
+
 from services.ConfigProfile_Service import ConfigProfileService
 from services.workspace_service import WorkspaceService
 from services.launcher_service import LauncherService
@@ -63,30 +64,51 @@ class MainWindow(QMainWindow):
         # and connect to slot "self._profiles_changed"
         self.profile_list.profiles_changed.connect(self._profiles_changed)
 
-        # Central Widget(QWidget)            # QWidget
-        #     │
-        #     └── QVBoxLayout                # main_layout
-        #            │
-        #            └── self.profile_list   # widget of main_layout
-        #            └── self.launch_button  # widget of main_layout
-        top_layout.addWidget(self.profile_list)
-        top_layout.addWidget(self.preview)
+        # ------------------------------------------------------------------
+        # Central Widget                               (QWidget)
+        # └── QVBoxLayout                                (main_layout)
+        #      ├── QHBoxLayout                              (top_layout)
+        #      │    ├── self.profile_list
+        #      │    └── self.preview
+        #      ├── QHBoxLayout                               (button_layout)
+        #      │    ├── self.launch_button
+        #      │    └── self.capture_button
+        #      └── self.activity_log
+        # ------------------------------------------------------------------
 
+        # Profile list + Preview
+        top_layout.addWidget(self.profile_list, 1)
+        top_layout.addWidget(self.preview, 2)
+
+        # Button layout
+        button_layout = QHBoxLayout()
+        button_layout.addWidget(self.launch_button)
+        button_layout.addWidget(self.capture_button)
+
+        # Main layout
         main_layout.addLayout(top_layout)
-
-        main_layout.addWidget(self.launch_button)
-        main_layout.addWidget(self.capture_button)
+        main_layout.addLayout(button_layout)
         main_layout.addWidget(self.activity_log)
 
+        # Stretch
+        main_layout.setStretch(0, 3)
+        main_layout.setStretch(1, 0)
+        main_layout.setStretch(2, 2)
+
+        # Central widget
         central_widget = QWidget()
         central_widget.setLayout(main_layout)
         self.setCentralWidget(central_widget)
 
-    # status bar status
+    # ------------------------------------------------------------------
+    # Status bar
+    # ------------------------------------------------------------------
     def _status_bar(self, message: str, timeout: int = 0):
         self.status_bar.showMessage(message, timeout)
 
+    # ------------------------------------------------------------------
     # launch button slot
+    # ------------------------------------------------------------------
     def _launch_button_clicked(self):
         self._status_bar("Launching...")
         # Log activity
@@ -105,7 +127,9 @@ class MainWindow(QMainWindow):
             log_launch_results(self.activity_log, launch_result)
         self._status_bar("Launch completed.")
 
+    # ------------------------------------------------------------------
     # capture button slot
+    # ------------------------------------------------------------------
     def _capture_button_clicked(self):
         self._status_bar("Capturing applications...")
         self.activity_log.log("Capturing applications...")
@@ -118,7 +142,9 @@ class MainWindow(QMainWindow):
         )
         self._status_bar("Capture completed.",3000)
 
+    # ------------------------------------------------------------------
     # work space preview slot
+    # ------------------------------------------------------------------
     def _profiles_changed(self, profiles: list[str]):
         # Enable Launch when at least one profile is selected
         self.launch_button.setEnabled(bool(profiles))
@@ -139,10 +165,3 @@ class MainWindow(QMainWindow):
         workspace = WorkspaceService.load(path)
         # preview from workspace
         self.preview.show_workspace(workspace)
-
-
-
-
-
-
-
