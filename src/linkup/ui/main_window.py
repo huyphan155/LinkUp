@@ -20,9 +20,9 @@ from ui.widgets.activity_log_widget import ActivityLogWidget
 from services.ConfigProfile_Service import ConfigProfileService
 from services.workspace_service import WorkspaceService
 from services.launcher_service import LauncherService
-from services.application_capture import ApplicationCapture
 
 from workers.capture_worker import CaptureWorker
+from workers.launch_worker import LaunchWorker
 
 class MainWindow(QMainWindow):
 
@@ -41,6 +41,8 @@ class MainWindow(QMainWindow):
         # Capture thread / worker
         self.capture_thread = None
         self.capture_worker = None
+        self.launch_worker = None
+        self.launch_thread = None
 
         # Main layout
         main_layout = QVBoxLayout()
@@ -116,22 +118,57 @@ class MainWindow(QMainWindow):
     # launch button slot
     # ------------------------------------------------------------------
     def _launch_button_clicked(self):
-        self._status_bar("Launching...")
-        # Log activity
-        self.activity_log.log("Launching...")
+
         selected_profiles = self.profile_list.selected_profiles()
-        for profile_name in selected_profiles:
-            # Log activity
-            self.activity_log.log(f"Loading profile: {profile_name}")
-            # get path of profile_name
-            path = ConfigProfileService.get(profile_name)
-            # load workspace from path
-            workspace = WorkspaceService.load(path)
-            # launch from workspace
-            launch_result = LauncherService.launch(workspace)
-            # Log activity with helper
-            log_launch_results(self.activity_log, launch_result)
+        if not selected_profiles:
+            return
+
+        # Prevent multiple launch operations
+        self.launch_button.setEnabled(False)
+
+        self._status_bar("Launching...")
+        self.activity_log.log("Launching...")
+
+        # Create thread
+        self.launch_thread  = QThread()
+        # Create worker
+        self.launch_worker  = LaunchWorker(selected_profiles)
+
+        # Move worker to background thread
+        self.launch_worker.moveToThread(self.launch_thread)
+        # Start worker when thread starts
+        self.launch_thread.started.connect(self.launch_worker.run)
+
+        # Worker signals
+        self.launch_worker.finished.connect(self._launch_finished)
+        self.launch_worker.error.connect(self._launch_error)
+        self.launch_worker.log_requested.connect(self.activity_log.log)
+        self.launch_worker.launch_result.connect(
+            lambda result: log_launch_results(self.activity_log, result)
+        )
+
+        # Cleanup worker/thread
+        self.launch_worker.finished.connect(self.launch_thread.quit)
+        self.launch_worker.error.connect(self.launch_thread.quit)
+        self.launch_thread.finished.connect(self._launch_thread_finished)
+
+        # Start background thread
+        self.launch_thread.start()
+
+    def _launch_finished(self):
         self._status_bar("Launch completed.")
+
+    def _launch_error(self,error_message: str):
+        self.activity_log.log("✘ Launch failed.")
+        self.activity_log.log(f"Error: {error_message}")
+        self._status_bar("Launch failed.",5000)
+
+    def _launch_thread_finished(self):
+        self.launch_button.setEnabled(True)
+        self.launch_worker.deleteLater()
+        self.launch_thread.deleteLater()
+        self.launch_worker = None
+        self.launch_thread = None
 
     # ------------------------------------------------------------------
     # capture button slot
