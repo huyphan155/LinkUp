@@ -159,9 +159,14 @@ class MainWindow(QMainWindow):
             return
         # 1 profile : load -> preview
         profile_name = profiles[0]
-        # get path of profile_name
-        path = ConfigProfileService.get(profile_name)
-        # load workspace from path
-        workspace = WorkspaceService.load(path)
-        # preview from workspace
-        self.preview.show_workspace(workspace)
+        try:
+            # get path of profile_name
+            path = ConfigProfileService.get(profile_name)
+            # load workspace from path
+            workspace = WorkspaceService.load(path)
+            # preview from workspace
+            self.preview.show_workspace(workspace)
+        except Exception as e:
+            self.preview.show_message("Failed to load profile.")
+            self.activity_log.log(f"✘ Failed to preview: {profile_name}")
+            self.activity_log.log(f"Error: {e}")
