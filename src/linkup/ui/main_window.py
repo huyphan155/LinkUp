@@ -7,6 +7,8 @@ from PyQt6.QtWidgets import (
     QStatusBar,
 )
 
+from PyQt6.QtCore import QThread
+
 # import helper
 from utils.helper import log_launch_results
 
@@ -20,6 +22,7 @@ from services.workspace_service import WorkspaceService
 from services.launcher_service import LauncherService
 from services.application_capture import ApplicationCapture
 
+from workers.capture_worker import CaptureWorker
 
 class MainWindow(QMainWindow):
 
@@ -35,6 +38,9 @@ class MainWindow(QMainWindow):
         self.setFixedSize(600, 500)
         self.setMinimumSize(200,300) # min
         self.setMaximumSize(800,800) # max
+        # Capture thread / worker
+        self.capture_thread = None
+        self.capture_worker = None
 
         # Main layout
         main_layout = QVBoxLayout()
@@ -131,16 +137,54 @@ class MainWindow(QMainWindow):
     # capture button slot
     # ------------------------------------------------------------------
     def _capture_button_clicked(self):
+        # Prevent multiple capture operations
+        self.capture_button.setEnabled(False)
+
         self._status_bar("Capturing applications...")
         self.activity_log.log("Capturing applications...")
-        # application is capture and export to ./config/current_app.json
-        ApplicationCapture.export()
+
+        # Create thread
+        self.capture_thread = QThread()
+        # Create worker
+        self.capture_worker = CaptureWorker()
+
+        # Move worker to background thread
+        self.capture_worker.moveToThread(self.capture_thread)
+        # Start worker when thread starts
+        self.capture_thread.started.connect(self.capture_worker.run)
+
+        # Worker signals
+        self.capture_worker.finished.connect(self._capture_finished)
+        self.capture_worker.error.connect(self._capture_error)
+
+        # Cleanup worker/thread
+        self.capture_worker.finished.connect(self.capture_thread.quit)
+        self.capture_worker.error.connect(self.capture_thread.quit)
+        self.capture_thread.finished.connect(self._capture_thread_finished)
+
+        # Start background thread
+        self.capture_thread.start()
+
+
+    def _capture_finished(self):
         self.activity_log.log(
             "✔ Applications captured.",
             "✔ Exported ./config/current_app.json",
             "Capture completed."
         )
         self._status_bar("Capture completed.",3000)
+
+    def _capture_error(self,error_message: str):
+        self.activity_log.log("✘ Capture failed.")
+        self.activity_log.log(f"Error: {error_message}")
+        self._status_bar("Capture failed.",5000)
+
+    def _capture_thread_finished(self):
+        self.capture_button.setEnabled(True)
+        self.capture_worker.deleteLater()
+        self.capture_thread.deleteLater()
+        self.capture_worker = None
+        self.capture_thread = None
 
     # ------------------------------------------------------------------
     # work space preview slot

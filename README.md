@@ -156,6 +156,39 @@ Business logic is separated from the UI.
 
 ---
 
+
+## Thread life cycle 
+
+---
+Click Capture
+     ↓
+Create QThread
+     ↓
+Create Worker
+     ↓
+Worker.moveToThread(thread)
+     ↓
+thread.start()
+     ↓
+worker.run()
+     ↓
+ApplicationCapture.export()
+     ↓
+      ┌──────────────┐
+      │              │
+   success          error
+      │              │
+ finished          error
+      │              │
+      └──────┬───────┘
+             ↓
+      thread.quit()
+             ↓
+      thread.finished
+             ↓
+      cleanup
+---
+
 ## How to Run
 
 Clone repository
